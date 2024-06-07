@@ -1,10 +1,15 @@
 import express from 'express'
 import logger from 'morgan'
-
 // Importamos la creación de un servidor con websocket utilizando socket.io
 import { Server as SocketServer } from 'socket.io'
 // Importamos la posibilidad de crear un servidor http de node.
 import { createServer } from 'node:http'
+// require('./models/mongoDB/database.js')
+import { databaseConnection } from './models/mongoDB/database.js'
+import { config } from 'dotenv'
+
+config()
+databaseConnection()
 
 const port = process.env.PORT ?? 3000
 
