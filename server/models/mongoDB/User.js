@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 import bcrypt from 'bcryptjs'
 
-const TeacherSchema = new Schema(
+const UserSchema = new Schema(
   {
     name: {
       type: String,
@@ -24,13 +24,13 @@ const TeacherSchema = new Schema(
   { timestamps: true }
 )
 
-TeacherSchema.methods.encryptPassword = async (password) => {
+UserSchema.methods.encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(10)
   return await bcrypt.hash(password, salt)
 }
 
-TeacherSchema.methods.matchPassword = async function (password) {
+UserSchema.methods.matchPassword = async function (password) {
   return await bcrypt.compare(password, this.password)
 }
 
-export const teacherModel = model('Teacher', TeacherSchema)
+export default model('User', UserSchema)
