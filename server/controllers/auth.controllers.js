@@ -5,6 +5,10 @@ export const register = async (req, res) => {
   const { name, lastName, email, password } = req.body
 
   try {
+    const userFound = await User.findOne({ email })
+    if (userFound)
+      return res.status(400).json({ message: ['The email is already in use'] })
+
     const newUser = new User({
       name,
       lastName,
@@ -28,7 +32,7 @@ export const register = async (req, res) => {
       email: userSaved.email,
     })
   } catch (err) {
-    re.status(500).json({ message: err.message })
+    res.status(500).json({ message: err.message })
   }
 }
 

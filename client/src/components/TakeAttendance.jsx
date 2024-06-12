@@ -17,7 +17,7 @@ export function TakeAttendance() {
 
   return (
     <>
-      <h1>Prueba de funcionamiento</h1>
+      <h1 className=''>Prueba de funcionamiento</h1>
       <button onClick={handleClick}>Broadcast</button>
     </>
   )

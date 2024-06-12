@@ -9,11 +9,11 @@ const CourseSchema = new Schema({
     type: number,
     required: true,
   },
-  schedule: {
-    start: String,
-    end: String,
-    required: true,
-  },
+  // schedule: {
+  //   start: String,
+  //   end: String,
+  //   required: true,
+  // },
   professor: {
     type: Schema.Types.ObjectId,
     ref: 'User',
