@@ -4,6 +4,7 @@ import {
   logout,
   profile,
   register,
+  verifyToken,
 } from '../controllers/auth.controllers.js'
 import { authRequired } from '../middleware/validatetoken.js'
 
@@ -16,5 +17,7 @@ router.post('/login', login)
 router.post('/logout', logout)
 
 router.get('/profile', authRequired, profile)
+
+router.get('/verify', verifyToken)
 
 export default router

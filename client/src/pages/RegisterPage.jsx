@@ -27,6 +27,7 @@ function RegisterPage() {
           {error}
         </div>
       ))}
+      <h1 className='text-2xl font-bold'>Login</h1>
       <form
         onSubmit={onSubmit}
         className='flex h-full w-full max-w-md flex-col gap-2'

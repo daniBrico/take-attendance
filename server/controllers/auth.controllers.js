@@ -1,5 +1,6 @@
 import User from '../models/mongoDB/User.js'
 import { createAccessToken } from '../libs/jwt.js'
+import jwt from 'jsonwebtoken'
 
 export const register = async (req, res) => {
   const { name, lastName, email, password } = req.body
@@ -82,5 +83,27 @@ export const profile = async (req, res) => {
     name: userFound.name,
     lastName: userFound.lastName,
     email: userFound.email,
+  })
+}
+
+export const verifyToken = async (req, res) => {
+  const { token } = req.cookies
+
+  if (!token) return res.status(401).json({ message: 'Not authorized' })
+
+  const { TOKEN_SECRET } = process.env
+
+  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+    if (err) return res.status(401).json({ message: 'Not authorized' })
+
+    const userFound = await User.findById(user.id)
+
+    if (!userFound) return res.status(401).json({ meessage: 'Not authorized' })
+
+    return res.json({
+      id: userFound._id,
+      username: userFound.name,
+      email: userFound.email,
+    })
   })
 }
