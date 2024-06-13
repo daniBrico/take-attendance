@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react'
 import { registerRequest, loginRequest, verifyTokenRequest } from '../api/auth'
 import Cookies from 'js-cookie'
+import { jwtDecode } from 'jwt-decode'
 
 export const AuthContext = createContext()
 
@@ -19,16 +20,14 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [errors, setErrors] = useState([])
   const [loading, setLoading] = useState(true)
+  const [userType, setUserType] = useState('')
 
   const signUp = async (user) => {
     try {
       const res = await registerRequest(user)
-      console.log(user)
-      console.log(res.data)
       setUser(res.data)
       setIsAuthenticated(true)
     } catch (err) {
-      console.log(err.response)
       setErrors(err.response.data.message)
     }
   }
@@ -36,12 +35,17 @@ export const AuthProvider = ({ children }) => {
   const signIn = async (user) => {
     try {
       const res = await loginRequest(user)
-      console.log(res)
       setUser(res.data)
       setIsAuthenticated(true)
     } catch (err) {
       console.log(err)
     }
+  }
+
+  const logout = () => {
+    Cookies.remove('token')
+    setIsAuthenticated(false)
+    setUser(null)
   }
 
   useEffect(() => {
@@ -74,6 +78,9 @@ export const AuthProvider = ({ children }) => {
           return
         }
 
+        const decoded = jwtDecode(cookies.token)
+
+        setUserType(decoded.role)
         setIsAuthenticated(true)
         setUser(res.data)
         setLoading(false)
@@ -91,6 +98,8 @@ export const AuthProvider = ({ children }) => {
       value={{
         signUp,
         signIn,
+        logout,
+        userType,
         loading,
         user,
         isAuthenticated,

@@ -1,5 +1,4 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import { TakeAttendance } from './components/TakeAttendance'
+import { Routes, Route } from 'react-router-dom'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import { AuthProvider } from './context/AuthContext'

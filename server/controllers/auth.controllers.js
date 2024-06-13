@@ -8,13 +8,15 @@ import Student from '../models/mongoDB/Student.js'
 const saveUser = async (UserModel, userData, res) => {
   try {
     const newUser = new UserModel(userData)
+    let userType = 'student'
 
-    console.log(newUser)
+    if (newUser.collection.collectionName === 'professors')
+      userType = 'proffesor'
 
     newUser.password = await newUser.encryptPassword(userData.password)
     const userSaved = await newUser.save()
 
-    const token = await createAccessToken({ id: userSaved._id })
+    const token = await createAccessToken({ id: userSaved._id, role: userType })
 
     res.cookie('token', token)
 
@@ -69,16 +71,19 @@ export const login = async (req, res) => {
 
     if (!userFound) userFound = await Student.findOne({ email })
 
-    console.log(userFound)
-
     if (!userFound) return res.status(400).json({ message: 'User not found' })
+
+    let userType = 'student'
+
+    if (userFound.collection.collectionName === 'professors')
+      userType = 'professor'
 
     const isMatch = await userFound.matchPassword(password)
 
     if (!isMatch)
       return res.status(400).json({ message: 'Invalid credentials' })
 
-    const token = await createAccessToken({ id: userFound._id })
+    const token = await createAccessToken({ id: userFound._id, role: userType })
 
     res.cookie('token', token)
 
@@ -132,7 +137,8 @@ export const verifyToken = async (req, res) => {
 
     return res.json({
       id: userFound._id,
-      username: userFound.name,
+      name: userFound.name,
+      lastName: userFound.lastName,
       email: userFound.email,
     })
   })
