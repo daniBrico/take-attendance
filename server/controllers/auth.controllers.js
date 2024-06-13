@@ -1,26 +1,18 @@
 import User from '../models/mongoDB/User.js'
 import { createAccessToken } from '../libs/jwt.js'
 import jwt from 'jsonwebtoken'
+import EmailValidate from '../models/mongoDB/EmailValidate.js'
+import Professor from '../models/mongoDB/Professor.js'
+import Student from '../models/mongoDB/Student.js'
 
-export const register = async (req, res) => {
-  const { name, lastName, email, password } = req.body
-
+const saveUser = async (UserModel, userData, res) => {
   try {
-    const userFound = await User.findOne({ email })
-    if (userFound)
-      return res.status(400).json({ message: ['The email is already in use'] })
+    const newUser = new UserModel(userData)
 
-    const newUser = new User({
-      name,
-      lastName,
-      email,
-      password,
-    })
-
-    newUser.password = await newUser.encryptPassword(password)
-
-    const userSaved = await newUser.save()
     console.log(newUser)
+
+    newUser.password = await newUser.encryptPassword(userData.password)
+    const userSaved = await newUser.save()
 
     const token = await createAccessToken({ id: userSaved._id })
 
@@ -33,7 +25,39 @@ export const register = async (req, res) => {
       email: userSaved.email,
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: [`${err.message}`] })
+  }
+}
+
+export const register = async (req, res) => {
+  const { name, lastName, email, password } = req.body
+
+  try {
+    const emailValidateFound = await EmailValidate.findOne({ email })
+
+    if (emailValidateFound) {
+      const professorFound = await Professor.findOne({ email })
+
+      if (professorFound) {
+        return res
+          .status(400)
+          .json({ message: ['The email is already in use'] })
+      }
+
+      await saveUser(Professor, { name, lastName, email, password }, res)
+    } else {
+      const studentFound = await Student.findOne({ email })
+
+      if (studentFound) {
+        return res
+          .status(400)
+          .json({ message: ['The email is already in use'] })
+      }
+
+      await saveUser(Student, { name, lastName, email, password }, res)
+    }
+  } catch (err) {
+    res.status(500).json({ message: [`${err.message}`] })
   }
 }
 
@@ -41,7 +65,11 @@ export const login = async (req, res) => {
   const { email, password } = req.body
 
   try {
-    const userFound = await User.findOne({ email })
+    let userFound = await Professor.findOne({ email })
+
+    if (!userFound) userFound = await Student.findOne({ email })
+
+    console.log(userFound)
 
     if (!userFound) return res.status(400).json({ message: 'User not found' })
 
@@ -96,7 +124,9 @@ export const verifyToken = async (req, res) => {
   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
     if (err) return res.status(401).json({ message: 'Not authorized' })
 
-    const userFound = await User.findById(user.id)
+    let userFound = await Professor.findById(user.id)
+
+    if (!userFound) userFound = await Student.findById(user.id)
 
     if (!userFound) return res.status(401).json({ meessage: 'Not authorized' })
 
