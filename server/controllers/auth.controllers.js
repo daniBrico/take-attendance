@@ -1,4 +1,4 @@
-import User from '../models/mongoDB/User.js'
+import Course from '../models/mongoDB/Course.js'
 import { createAccessToken } from '../libs/jwt.js'
 import jwt from 'jsonwebtoken'
 import EmailValidate from '../models/mongoDB/EmailValidate.js'

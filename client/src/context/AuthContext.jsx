@@ -35,8 +35,13 @@ export const AuthProvider = ({ children }) => {
   const signIn = async (user) => {
     try {
       const res = await loginRequest(user)
+      const cookies = Cookies.get()
+      const decoded = jwtDecode(cookies.token)
+
       setUser(res.data)
       setIsAuthenticated(true)
+
+      setUserType(decoded.role)
     } catch (err) {
       console.log(err)
     }
@@ -46,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     Cookies.remove('token')
     setIsAuthenticated(false)
     setUser(null)
+    setUserType('')
   }
 
   useEffect(() => {
