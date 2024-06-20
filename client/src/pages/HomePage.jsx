@@ -1,27 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import Header from '../components/Header'
 
 function HomePage() {
   const { logout, user, userType } = useAuth()
 
+  const handleClick = () => {
+    console.log('Se presiono')
+  }
+
   return (
     <>
-      <header className='bg-slate-800'>
-        <ul className='mx-auto flex max-w-3xl justify-between p-4'>
-          <li>{`${user.name} (${userType === 'professor' ? 'Profesor' : 'Estudiante'})`}</li>
-          <li>
-            <Link
-              to='/login'
-              onClick={() => {
-                logout()
-              }}
-            >
-              Logout
-            </Link>
-          </li>
-        </ul>
-      </header>
+      <Header user={user} logout={logout} userType={userType} />
       <main className='flex flex-col items-center px-4'>
         <h1 className='my-2 text-center text-xl'>Cursos</h1>
         <article className='grid w-full max-w-3xl grid-cols-1 gap-1 sm:grid-cols-2'>
@@ -57,7 +47,10 @@ function HomePage() {
           </div>
         </article>
         {userType === 'professor' ? (
-          <div className='my-4 flex w-full items-center justify-center'>
+          <div
+            className='my-4 flex w-full items-center justify-center'
+            onClick={handleClick}
+          >
             <div className='cursor-pointer rounded-lg bg-slate-400 px-2 py-1 text-center'>
               <p>Agregar Curso</p>
             </div>
