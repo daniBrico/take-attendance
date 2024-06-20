@@ -20,6 +20,13 @@ const SubjectSchema = new Schema({
       required: true,
     },
   ],
+  schedule: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Schedule',
+      required: true,
+    },
+  ],
 })
 
 export default model('Subject', SubjectSchema)
