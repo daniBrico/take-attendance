@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
+import { Link } from 'react-router-dom'
 
 function HomePage() {
   const { logout, user, userType } = useAuth()
@@ -47,14 +48,12 @@ function HomePage() {
           </div>
         </article>
         {userType === 'professor' ? (
-          <div
-            className='my-4 flex w-full items-center justify-center'
-            onClick={handleClick}
+          <Link
+            to='/create-course'
+            className='mt-4 rounded-lg bg-slate-400 px-2 py-1'
           >
-            <div className='cursor-pointer rounded-lg bg-slate-400 px-2 py-1 text-center'>
-              <p>Agregar Curso</p>
-            </div>
-          </div>
+            Agregar curso
+          </Link>
         ) : (
           ''
         )}
