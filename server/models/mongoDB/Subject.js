@@ -17,14 +17,6 @@ const SubjectSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: 'Subject',
-      required: true,
-    },
-  ],
-  schedule: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Schedule',
-      required: true,
     },
   ],
 })

@@ -16,6 +16,23 @@ const CourseSchema = new Schema({
       ref: 'Student',
     },
   ],
+  schedule: [
+    {
+      days: {
+        type: [String],
+        enum: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        required: true,
+      },
+      startTime: {
+        type: String,
+        required: true,
+      },
+      endTime: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 })
 
 export default model('Course', CourseSchema)
