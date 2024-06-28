@@ -5,8 +5,6 @@ export const databaseConnection = async () => {
   const { RTATT_MONGODB_HOST, RTATT_MONGODB_DATABASE } = process.env
   const MONGODB_URI = `mongodb://${RTATT_MONGODB_HOST}/${RTATT_MONGODB_DATABASE}`
 
-  console.log(MONGODB_URI)
-
   try {
     await mongoose.connect(MONGODB_URI)
     console.log('DB is connected')
