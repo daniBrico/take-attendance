@@ -9,7 +9,7 @@ const SubjectSchema = new Schema({
     type: String,
     required: true,
   },
-  dictado: {
+  offering: {
     type: String,
     required: true,
   },

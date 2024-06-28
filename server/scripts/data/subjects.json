@@ -1,361 +1,259 @@
 [
   {
-    "nombre": "Tecnología Aplicada",
-    "codigo": "07071",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": "Aprobada"
+    "name": "Tecnología Aplicada",
+    "code": "07071",
+    "offering": "1°C"
   },
   {
-    "nombre": "Algebra y Geometría Analítica",
-    "codigo": "01017",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": "Aprobada"
+    "name": "Algebra y Geometría Analítica",
+    "code": "01017",
+    "offering": "1°C"
   },
   {
-    "nombre": "Algoritmo y Estructuras de Datos",
-    "codigo": "07030",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": "Aprobada"
+    "name": "Algoritmo y Estructuras de Datos",
+    "code": "07030",
+    "offering": "1°C"
   },
   {
-    "nombre": "Teoría de Sistemas y Organizaciones",
-    "codigo": "07032",
-    "dictado": "2°C",
-    "correlativas": [],
-    "estado": "Aprobada"
+    "name": "Teoría de Sistemas y Organizaciones",
+    "code": "07032",
+    "offering": "2°C"
   },
   {
-    "nombre": "Problemática Regional",
-    "codigo": "02004",
-    "dictado": "2°C",
-    "correlativas": [],
-    "estado": null
+    "name": "Problemática Regional",
+    "code": "02004",
+    "offering": "2°C"
   },
   {
-    "nombre": "Arquitectura de Computadores I",
-    "codigo": "07031",
-    "dictado": "2°C",
-    "correlativas": ["07071"],
-    "estado": "Aprobada"
+    "name": "Arquitectura de Computadores I",
+    "code": "07031",
+    "offering": "2°C"
   },
   {
-    "nombre": "Programación con Objetos I",
-    "codigo": "07033",
-    "dictado": "2°C",
-    "correlativas": ["07030"],
-    "estado": "Aprobada"
+    "name": "Programación con Objetos I",
+    "code": "07033",
+    "offering": "2°C"
   },
   {
-    "nombre": "Análisis y Producción del Discurso",
-    "codigo": "02001",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": "Cursando"
+    "name": "Análisis y Producción del Discurso",
+    "code": "02001",
+    "offering": "1°C"
   },
   {
-    "nombre": "Matemáticas Discretas",
-    "codigo": "01018",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": "Aprobada"
+    "name": "Matemáticas Discretas",
+    "code": "01018",
+    "offering": "1°C"
   },
 
   {
-    "nombre": "Análisis Matemático I",
-    "codigo": "01019",
-    "dictado": "1°C",
-    "correlativas": ["01017"],
-    "estado": "Aprobada"
+    "name": "Análisis Matemático I",
+    "code": "01019",
+    "offering": "1°C"
   },
   {
-    "nombre": "Programación con Objetos II",
-    "codigo": "07034",
-    "dictado": "1°C",
-    "correlativas": ["07033"],
-    "estado": "Aprobada"
+    "name": "Programación con Objetos II",
+    "code": "07034",
+    "offering": "1°C"
   },
   {
-    "nombre": "Electiva",
-    "codigo": "00004",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": null
+    "name": "Electiva",
+    "code": "00004",
+    "offering": "1°C"
   },
   {
-    "nombre": "Arquitectura de Computadores II",
-    "codigo": "07036",
-    "dictado": "1°C",
-    "correlativas": ["07031"],
-    "estado": "Aprobada"
+    "name": "Arquitectura de Computadores II",
+    "code": "07036",
+    "offering": "1°C"
   },
   {
-    "nombre": "Lenguajes Formales",
-    "codigo": "07035",
-    "dictado": "1°C",
-    "correlativas": ["01018"],
-    "estado": "Equivalencia"
+    "name": "Lenguajes Formales",
+    "code": "07035",
+    "offering": "1°C"
   },
   {
-    "nombre": "Universidad, Ciencia y Sociedad",
-    "codigo": "02036",
-    "dictado": "2°C",
-    "correlativas": [],
-    "estado": "Aprobada"
+    "name": "Universidad, Ciencia y Sociedad",
+    "code": "02036",
+    "offering": "2°C"
   },
   {
-    "nombre": "Ingeniería de Software I",
-    "codigo": "07041",
-    "dictado": "2°C",
-    "correlativas": ["07030", "07032"],
-    "estado": "Aprobada"
+    "name": "Ingeniería de Software I",
+    "code": "07041",
+    "offering": "2°C"
   },
   {
-    "nombre": "Probabilidad y Estadística",
-    "codigo": "01020",
-    "dictado": "2°C",
-    "correlativas": ["01019"],
-    "estado": "Recursar"
+    "name": "Probabilidad y Estadística",
+    "code": "01020",
+    "offering": "2°C"
   },
   {
-    "nombre": "Sistemas Operativos I",
-    "codigo": "07039",
-    "dictado": "2°C",
-    "correlativas": ["07031"],
-    "estado": "Regular"
+    "name": "Sistemas Operativos I",
+    "code": "07039",
+    "offering": "2°C"
   },
   {
-    "nombre": "Base de Datos I",
-    "codigo": "07014",
-    "dictado": "2°C",
-    "correlativas": ["07030", "01018"],
-    "estado": "Aprobada"
+    "name": "Base de Datos I",
+    "code": "07014",
+    "offering": "2°C"
   },
   {
-    "nombre": "Comunicación y Redes I",
-    "codigo": "07040",
-    "dictado": "2°C",
-    "correlativas": ["07031"],
-    "estado": "Aprobada"
+    "name": "Comunicación y Redes I",
+    "code": "07040",
+    "offering": "2°C"
   },
   {
-    "nombre": "Análisis Matemático II",
-    "codigo": "01021",
-    "dictado": "1°C",
-    "correlativas": ["01019", "01020"],
-    "estado": null
+    "name": "Análisis Matemático II",
+    "code": "01021",
+    "offering": "1°C"
   },
   {
-    "nombre": "Base de Datos II",
-    "codigo": "07017",
-    "dictado": "1°C",
-    "correlativas": ["07039", "07014"],
-    "estado": "Cursando"
+    "name": "Base de Datos II",
+    "code": "07017",
+    "offering": "1°C"
   },
   {
-    "nombre": "Comunicación y Redes II",
-    "codigo": "07045",
-    "dictado": "1°C",
-    "correlativas": ["07040"],
-    "estado": "Cursando"
+    "name": "Comunicación y Redes II",
+    "code": "07045",
+    "offering": "1°C"
   },
   {
-    "nombre": "Ingeniería de Software II",
-    "codigo": "07043",
-    "dictado": "1°C",
-    "correlativas": ["07041"],
-    "estado": "Aprobada"
+    "name": "Ingeniería de Software II",
+    "code": "07043",
+    "offering": "1°C"
   },
   {
-    "nombre": "Interfaces de Usuarios y Tecnologías Web",
-    "codigo": "07044",
-    "dictado": "1°C",
-    "correlativas": ["07034"],
-    "estado": "Cursando"
+    "name": "Interfaces de Usuarios y Tecnologías Web",
+    "code": "07044",
+    "offering": "1°C"
   },
   {
-    "nombre": "Programación con Objetos III",
-    "codigo": "07048",
-    "dictado": "2°C",
-    "correlativas": ["07039", "07034", "07017"],
-    "estado": "Aprobada"
+    "name": "Programación con Objetos III",
+    "code": "07048",
+    "offering": "2°C"
   },
   {
-    "nombre": "Matemática Aplicada",
-    "codigo": "01022",
-    "dictado": "2°C",
-    "correlativas": ["01021"],
-    "estado": null
+    "name": "Matemática Aplicada",
+    "code": "01022",
+    "offering": "2°C"
   },
   {
-    "nombre": "Explotación de Datos",
-    "codigo": "07046",
-    "dictado": "2°C",
-    "correlativas": ["07017"],
-    "estado": null
+    "name": "Explotación de Datos",
+    "code": "07046",
+    "offering": "2°C"
   },
   {
-    "nombre": "Taller de Redes",
-    "codigo": "07047",
-    "dictado": "2°C",
-    "correlativas": ["07045"],
-    "estado": null
+    "name": "Taller de Redes",
+    "code": "07047",
+    "offering": "2°C"
   },
   {
-    "nombre": "Sistemas Operativos II",
-    "codigo": "07050",
-    "dictado": "2°C",
-    "correlativas": ["07039", "07036", "07045"],
-    "estado": null
+    "name": "Sistemas Operativos II",
+    "code": "07050",
+    "offering": "2°C"
   },
   {
-    "nombre": "Dirección y Evaluación de Proyectos Informáticos",
-    "codigo": "07023",
-    "dictado": "1°C",
-    "correlativas": ["07043"],
-    "estado": "Regular"
+    "name": "Dirección y Evaluación de Proyectos Informáticos",
+    "code": "07023",
+    "offering": "1°C"
   },
   {
-    "nombre": "Arquitectura de Software",
-    "codigo": "07051",
-    "dictado": "1°C",
-    "correlativas": ["07043", "07036"],
-    "estado": null
+    "name": "Arquitectura de Software",
+    "code": "07051",
+    "offering": "1°C"
   },
   {
-    "nombre": "Modelos, Simulación y Teoría de la Decisión",
-    "codigo": "01023",
-    "dictado": "1°C",
-    "correlativas": ["01021"],
-    "estado": null
+    "name": "Modelos, Simulación y Teoría de la Decisión",
+    "code": "01023",
+    "offering": "1°C"
   },
   {
-    "nombre": "Metodología de la Investigación",
-    "codigo": "02037",
-    "dictado": "1°C",
-    "correlativas": ["07043", "01022"],
-    "estado": null
+    "name": "Metodología de la Investigación",
+    "code": "02037",
+    "offering": "1°C"
   },
   {
-    "nombre": "Paradigmas de Programación",
-    "codigo": "07052",
-    "dictado": "1°C",
-    "correlativas": ["07048", "07035"],
-    "estado": null
+    "name": "Paradigmas de Programación",
+    "code": "07052",
+    "offering": "1°C"
   },
   {
-    "nombre": "Lenguajes de Programación",
-    "codigo": "07054",
-    "dictado": "1°C",
-    "correlativas": ["07048", "07035"],
-    "estado": null
+    "name": "Lenguajes de Programación",
+    "code": "07054",
+    "offering": "1°C"
   },
   {
-    "nombre": "Infraestructura de Sistemas",
-    "codigo": "07057",
-    "dictado": "2°C",
-    "correlativas": ["07036", "07047"],
-    "estado": null
+    "name": "Infraestructura de Sistemas",
+    "code": "07057",
+    "offering": "2°C"
   },
   {
-    "nombre": "Desarrollo de Compiladores",
-    "codigo": "07058",
-    "dictado": "2°C",
-    "correlativas": ["07054"],
-    "estado": null
+    "name": "Desarrollo de Compiladores",
+    "code": "07058",
+    "offering": "2°C"
   },
   {
-    "nombre": "Inteligencia Artificial",
-    "codigo": "07059",
-    "dictado": "2°C",
-    "correlativas": ["07048"],
-    "estado": null
+    "name": "Inteligencia Artificial",
+    "code": "07059",
+    "offering": "2°C"
   },
   {
-    "nombre": "Práctica Profesional",
-    "codigo": "07060",
-    "dictado": "2°C",
-    "correlativas": ["07046", "07051", "07044", "07023"],
-    "estado": null
+    "name": "Práctica Profesional",
+    "code": "07060",
+    "offering": "2°C"
   },
 
   {
-    "nombre": "Optativa I",
-    "codigo": "00009",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": null
+    "name": "Optativa I",
+    "code": "00009",
+    "offering": "1°C"
   },
   {
-    "nombre": "Aspectos Legales y Sociales de la Informática",
-    "codigo": "02038",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": null
+    "name": "Aspectos Legales y Sociales de la Informática",
+    "code": "02038",
+    "offering": "1°C"
   },
   {
-    "nombre": "Ingeniería de Software III",
-    "codigo": "07062",
-    "dictado": "1°C",
-    "correlativas": ["07043"],
-    "estado": null
+    "name": "Ingeniería de Software III",
+    "code": "07062",
+    "offering": "1°C"
   },
   {
-    "nombre": "Sistemas de Tiempo Real y Misión Crítica",
-    "codigo": "07064",
-    "dictado": "1°C",
-    "correlativas": ["07050"],
-    "estado": null
+    "name": "Sistemas de Tiempo Real y Misión Crítica",
+    "code": "07064",
+    "offering": "1°C"
   },
   {
-    "nombre": "Economía I",
-    "codigo": "09021",
-    "dictado": "1°C",
-    "correlativas": [],
-    "estado": null
+    "name": "Economía I",
+    "code": "09021",
+    "offering": "1°C"
   },
   {
-    "nombre": "Optativa II",
-    "codigo": "00010",
-    "dictado": "2°C",
-    "correlativas": [],
-    "estado": null
+    "name": "Optativa II",
+    "code": "00010",
+    "offering": "2°C"
   },
   {
-    "nombre": "Seguridad y Auditoría",
-    "codigo": "07065",
-    "dictado": "2°C",
-    "correlativas": ["07050", "07017", "07047"],
-    "estado": null
+    "name": "Seguridad y Auditoría",
+    "code": "07065",
+    "offering": "2°C"
   },
   {
-    "nombre": "Teoría de la Computación",
-    "codigo": "07067",
-    "dictado": "2°C",
-    "correlativas": ["07048", "07052", "07058"],
-    "estado": null
+    "name": "Teoría de la Computación",
+    "code": "07067",
+    "offering": "2°C"
   },
   {
-    "nombre": "Administración y Gestión de las Organizaciones",
-    "codigo": "08022",
-    "dictado": "2°C",
-    "correlativas": [],
-    "estado": null
+    "name": "Administración y Gestión de las Organizaciones",
+    "code": "08022",
+    "offering": "2°C"
   },
   {
-    "nombre": "Economía II",
-    "codigo": "09022",
-    "dictado": "2°C",
-    "correlativas": ["09021"],
-    "estado": null
+    "name": "Economía II",
+    "code": "09022",
+    "offering": "2°C"
   },
   {
-    "nombre": "Trabajo Final",
-    "codigo": "07068",
-    "dictado": "Anual",
-    "correlativas": ["07060", "07059"],
-    "estado": null
+    "name": "Trabajo Final",
+    "code": "07068",
+    "offering": "Anual"
   }
 ]
