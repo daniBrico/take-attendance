@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import { useAuth } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 function CourseForm() {
   const { logout, user, userType } = useAuth()
@@ -14,6 +15,9 @@ function CourseForm() {
     <>
       <Header user={user} logout={logout} userType={userType} />
       <main className='w-full'>
+        <form>
+          <input type='text' />
+        </form>
         <div className='mt-4 flex justify-center gap-2'>
           <Link to='/homepage' className='rounded-lg bg-slate-400 px-2 py-1'>
             Cancelar
