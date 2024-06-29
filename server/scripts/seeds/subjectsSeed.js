@@ -1,12 +1,12 @@
-import { config } from 'dotenv'
 import { createRequire } from 'node:module'
-import Subject from '../models/mongoDB/schemas/college/Subject.js'
-import { databaseConnection } from '../models/mongoDB/database.js'
+import Subject from '../../models/mongoDB/schemas/college/Subject.js'
+import {
+  databaseConnection,
+  closeDatabaseConnection,
+} from '../../models/mongoDB/database.js'
+import { dotenvConfig } from '../../config/config.js'
 
-config({ path: '../../.env' })
-
-console.log('RTATT_MONGODB_HOST:', process.env.RTATT_MONGODB_HOST)
-console.log('RTATT_MONGODB_DATABASE:', process.env.RTATT_MONGODB_DATABASE)
+dotenvConfig()
 
 databaseConnection()
   .then(() => {
@@ -19,7 +19,7 @@ databaseConnection()
 const seedDatabase = async () => {
   try {
     const require = createRequire(import.meta.url)
-    const subjecstData = require('./data/subjects.json')
+    const subjecstData = require('../data/subjects.json')
 
     await Subject.deleteMany({})
 
@@ -30,8 +30,8 @@ const seedDatabase = async () => {
       .catch((err) => {
         console.log('Error al insertar documentos: ', err)
       })
-      .finally(() => {
-        databaseConnection.connection.close()
+      .finally(async () => {
+        await closeDatabaseConnection()
       })
   } catch (err) {
     console.log(err)

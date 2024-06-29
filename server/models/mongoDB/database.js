@@ -9,7 +9,15 @@ export const databaseConnection = async () => {
     await mongoose.connect(MONGODB_URI)
     console.log('DB is connected')
   } catch (err) {
-    // console.log(err)
-    throw err
+    console.log(err)
+  }
+}
+
+export const closeDatabaseConnection = async () => {
+  try {
+    await mongoose.connection.close()
+    console.log('DB connection closed')
+  } catch (err) {
+    console.log(err)
   }
 }

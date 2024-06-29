@@ -13,7 +13,7 @@ const SubjectSchema = new Schema({
     type: String,
     required: true,
   },
-  correlativas: [
+  correlatives: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Subject',
