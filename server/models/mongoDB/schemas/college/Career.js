@@ -17,8 +17,14 @@ const CareerSchema = new Schema({
   },
   subjectsByYear: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'SubjecsByYear',
+      year: {
+        type: String,
+        required: true,
+      },
+      subjects: {
+        type: Schema.Types.ObjectId,
+        ref: 'Subject',
+      },
     },
   ],
 })
