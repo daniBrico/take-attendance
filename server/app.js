@@ -17,7 +17,7 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(cookieParser())
 
-app.use('/api', authRoutes)
-app.use('/courses', careerRoutes)
+app.use('/auth', authRoutes)
+app.use('/career', careerRoutes)
 
 export { app }
