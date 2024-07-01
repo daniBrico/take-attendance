@@ -9,7 +9,7 @@ export const databaseConnection = async () => {
     await mongoose.connect(MONGODB_URI)
     console.log('DB is connected')
   } catch (err) {
-    console.log(err)
+    console.log('Error connecting to the database: ', err)
   }
 }
 

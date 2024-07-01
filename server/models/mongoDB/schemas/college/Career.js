@@ -6,14 +6,14 @@ const CareerSchema = new Schema({
     required: true,
   },
   duration: {
-    type: Integer,
+    type: Number,
     required: true,
   },
   intermediateDegree: {
     type: String,
   },
   intermediateDegreeDuration: {
-    type: String,
+    type: Number,
   },
   subjectsByYear: [
     {
@@ -21,10 +21,13 @@ const CareerSchema = new Schema({
         type: String,
         required: true,
       },
-      subjects: {
-        type: Schema.Types.ObjectId,
-        ref: 'Subject',
-      },
+      subjects: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Subject',
+          required: true,
+        },
+      ],
     },
   ],
 })

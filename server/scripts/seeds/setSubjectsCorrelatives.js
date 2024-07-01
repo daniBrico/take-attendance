@@ -1,9 +1,6 @@
 import { createRequire } from 'node:module'
 import { dotenvConfig } from '../../config/config.js'
-import {
-  closeDatabaseConnection,
-  databaseConnection,
-} from '../../models/mongoDB/database.js'
+import { databaseConnection } from '../../models/mongoDB/database.js'
 import Subject from '../../models/mongoDB/schemas/college/Subject.js'
 
 dotenvConfig()
