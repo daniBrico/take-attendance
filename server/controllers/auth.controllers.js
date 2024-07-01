@@ -1,9 +1,8 @@
-import Course from '../models/mongoDB/Course.js'
 import { createAccessToken } from '../libs/jwt.js'
 import jwt from 'jsonwebtoken'
-import EmailValidate from '../models/mongoDB/EmailValidate.js'
-import Professor from '../models/mongoDB/Professor.js'
-import Student from '../models/mongoDB/Student.js'
+import EmailValidate from '../models/mongoDB/schemas/auth/EmailValidate.js'
+import Professor from '../models/mongoDB/schemas/auth/Professor.js'
+import Student from '../models/mongoDB/schemas/auth/Student.js'
 
 const saveUser = async (UserModel, userData, res) => {
   try {

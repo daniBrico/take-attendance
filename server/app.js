@@ -1,6 +1,7 @@
 import express from 'express'
 import logger from 'morgan'
 import authRoutes from './routes/auth.routes.js'
+import careerRoutes from './routes/career.routes.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
@@ -17,5 +18,6 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use('/api', authRoutes)
+app.use('/courses', careerRoutes)
 
 export { app }
