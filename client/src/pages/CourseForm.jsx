@@ -11,20 +11,25 @@ function CourseForm() {
   const [careerSelected, setCareerSelected] = useState(null)
   const [subjectsNames, setSubjectsNames] = useState([])
   const [selectSubjectsIsDisabled, setSelectSubjectsIsDisabled] = useState(true)
+  const [subjectSelected, setSubjectSelected] = useState(null)
 
   const handleClick = () => {
-    console.log('Se apreto el botón')
+    if (!careerSelected) {
+      console.log('La carrera no está establecida')
+      return
+    }
+
+    if (!subjectSelected) {
+      console.log('La materia no está establecida')
+      return
+    }
+
+    // Puedo crear el curso
   }
 
-  const handleSelectCareerChange = ({ value }) => {
-    setCareerSelected(value)
-    // Una vez que se selecciona el valor, habría que poner otro select pero que esta vez muestre el listado de materias basado en esa carrera.
-    // Activar el select de materias
-    // y mostrar las posibles materias a seleccionar
-    // console.log(value)
-  }
+  const handleSelectCareerChange = ({ value }) => setCareerSelected(value)
 
-  const handleSelectSubjectChange = () => {}
+  const handleSelectSubjectChange = ({ value }) => setSubjectSelected(value)
 
   useEffect(() => {
     const initializeCareersNames = async () => {
@@ -72,26 +77,121 @@ function CourseForm() {
     <>
       <Header user={user} logout={logout} userType={userType} />
       <main className='w-full'>
-        <form className='my-4 flex flex-col items-center justify-center gap-2'>
-          <Select
-            className='w-4/5 text-black'
-            options={careerNames}
-            onChange={handleSelectCareerChange}
-          />
-
-          <Select
-            className='w-4/5 text-black'
-            options={subjectsNames}
-            onChange={handleSelectSubjectChange}
-            isDisabled={selectSubjectsIsDisabled}
-          />
+        <form className='my-4 flex gap-2'>
+          <div className='w-full px-4'>
+            <h2 className='mb-2'>Selector de carrera</h2>
+            <Select
+              className='text-black'
+              options={careerNames}
+              onChange={handleSelectCareerChange}
+            />
+            <h2 className='mb-2 mt-4'>Selector de materia</h2>
+            <Select
+              className='text-black'
+              options={subjectsNames}
+              onChange={handleSelectSubjectChange}
+              isDisabled={selectSubjectsIsDisabled}
+            />
+          </div>
+          {/* <h2>Fecha y horario</h2>
+          <div className='mt-2 w-full px-2'>
+            <ul className='grid grid-cols-3 items-center justify-center gap-4'>
+              <li className='flex justify-center'>
+                <input
+                  className='peer hidden opacity-0'
+                  type='checkbox'
+                  name='lunes'
+                  id='lunes'
+                />
+                <label
+                  className='cursor-pointer rounded-lg border border-solid bg-slate-700 px-2 py-1 transition hover:bg-slate-500 peer-checked:border-slate-700 peer-checked:bg-slate-500'
+                  htmlFor='lunes'
+                >
+                  Lunes
+                </label>
+              </li>
+              <li className='flex justify-center'>
+                <input
+                  className='peer hidden opacity-0'
+                  type='checkbox'
+                  name='martes'
+                  id='martes'
+                />
+                <label
+                  className='cursor-pointer rounded-lg border border-solid bg-slate-700 px-2 py-1 transition hover:bg-slate-500 peer-checked:border-slate-500 peer-checked:bg-slate-500'
+                  htmlFor='martes'
+                >
+                  Martes
+                </label>
+              </li>
+              <li className='flex justify-center'>
+                <input
+                  className='peer hidden opacity-0'
+                  type='checkbox'
+                  name='miercoles'
+                  id='miercoles'
+                />
+                <label
+                  className='cursor-pointer rounded-lg border border-solid bg-slate-700 px-2 py-1 transition hover:bg-slate-500 peer-checked:border-slate-500 peer-checked:bg-slate-500'
+                  htmlFor='miercoles'
+                >
+                  Miércoles
+                </label>
+              </li>
+              <li className='flex justify-center'>
+                <input
+                  className='peer hidden opacity-0'
+                  type='checkbox'
+                  name='jueves'
+                  id='jueves'
+                />
+                <label
+                  className='cursor-pointer rounded-lg border border-solid bg-slate-700 px-2 py-1 transition hover:bg-slate-500 peer-checked:border-slate-500 peer-checked:bg-slate-500'
+                  htmlFor='jueves'
+                >
+                  Jueves
+                </label>
+              </li>
+              <li className='flex justify-center'>
+                <input
+                  className='peer hidden opacity-0'
+                  type='checkbox'
+                  name='viernes'
+                  id='viernes'
+                />
+                <label
+                  className='cursor-pointer rounded-lg border border-solid bg-slate-700 px-2 py-1 transition hover:bg-slate-500 peer-checked:border-slate-500 peer-checked:bg-slate-500'
+                  htmlFor='viernes'
+                >
+                  Viernes
+                </label>
+              </li>
+              <li className='flex justify-center'>
+                <input
+                  className='peer hidden opacity-0'
+                  type='checkbox'
+                  name='sabado'
+                  id='sabado'
+                />
+                <label
+                  className='cursor-pointer rounded-lg border border-solid bg-slate-700 px-2 py-1 transition hover:bg-slate-500 peer-checked:border-slate-500 peer-checked:bg-slate-500'
+                  htmlFor='sabado'
+                >
+                  Sábado
+                </label>
+              </li>
+            </ul>
+          </div> */}
         </form>
         <div className='mt-4 flex justify-center gap-2'>
-          <Link to='/homepage' className='rounded-lg bg-slate-400 px-2 py-1'>
+          <Link
+            to='/homepage'
+            className='rounded-lg bg-slate-700 px-2 py-1 transition hover:bg-slate-500'
+          >
             Cancelar
           </Link>
           <button
-            className='rounded-lg bg-slate-400 px-2 py-1'
+            className='rounded-lg bg-slate-700 px-2 py-1 transition hover:bg-slate-500'
             onClick={handleClick}
           >
             Agregar
