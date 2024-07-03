@@ -1,8 +1,12 @@
 import Router from 'express'
-import { getCareersNames } from '../controllers/career.controllers.js'
+import {
+  getCareersNames,
+  getSubjectsNames,
+} from '../controllers/career.controllers.js'
 
 const router = Router()
 
-router.get('/get-careers-names', getCareersNames)
+router.get('/names', getCareersNames)
+router.get('/subjects-names', getSubjectsNames)
 
 export default router
