@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 
 function HomePage() {
   const { logout, user, userType } = useAuth()
+
+  useEffect(() => {
+    // Cada vez que se carga el componente, verificar si hay algún curso para cargarle al usuario
+    console.log(user)
+    console.log(userType)
+  }, [])
 
   return (
     <>
