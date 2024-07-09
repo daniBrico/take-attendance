@@ -1,15 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
+import { Courses } from '../components/Course'
+import { getCourses } from '../api/courses.js'
 
 function HomePage() {
   const { logout, user, userType } = useAuth()
+  const [courses, setCourses] = useState([])
 
   useEffect(() => {
-    // Cada vez que se carga el componente, verificar si hay algún curso para cargarle al usuario
-    console.log(user)
-    console.log(userType)
+    async function axiosCourses() {
+      try {
+        const res = await getCourses(userType, user.id)
+
+        if (!res.status === 200) {
+          throw new Error('Error al cargar el curso')
+        }
+
+        const data = res.data
+
+        setCourses(data.courses)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    axiosCourses()
   }, [])
 
   return (
@@ -18,16 +35,7 @@ function HomePage() {
       <main className='flex flex-col items-center px-4'>
         <h1 className='my-2 text-center text-xl'>Cursos</h1>
         <article className='grid w-full max-w-3xl grid-cols-1 gap-1 sm:grid-cols-2'>
-          {/* <div className='flex flex-col gap-2 rounded-lg bg-slate-800 px-2 py-1'>
-            <div className='flex justify-between'>
-              <p>Nombre del curso</p>
-              <p>0701</p>
-            </div>
-            <div className='flex justify-between'>
-              <p>Alumnos: 16</p>
-              <p>Lun/Miér/Vier</p>
-            </div>
-          </div> */}
+          <Courses listOfCourses={courses} />
         </article>
         {userType === 'professor' ? (
           <Link

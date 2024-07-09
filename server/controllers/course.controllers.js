@@ -30,7 +30,7 @@ export const createCourse = async (req, res) => {
 }
 
 export const getCourses = async (req, res) => {
-  const { userType, userId } = req.body
+  const { userType, userId } = req.query
 
   try {
     let foundCourses
@@ -55,10 +55,10 @@ export const getCourses = async (req, res) => {
       // Me falta pasar los días de cursada
 
       courseInformation.push({
-        courseId: course._id,
-        subjectName: subject.name,
-        subjectCode: subject.code,
-        studentsLength: course.students.length,
+        id: course._id,
+        name: subject.name,
+        code: subject.code,
+        numberOfStudents: course.students.length,
       })
     }
 
