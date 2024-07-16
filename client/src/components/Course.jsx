@@ -1,9 +1,19 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function ListOfCourses({ name, code, numberOfStudents }) {
+  const navigate = useNavigate()
+
+  function handleClick() {
+    navigate('/course-home')
+  }
+
   return (
     <>
-      <div className='flex flex-col gap-2 rounded-lg bg-slate-800 px-2 py-1'>
+      <div
+        className='flex flex-col gap-2 rounded-lg bg-slate-800 px-2 py-1 hover:cursor-pointer'
+        onClick={handleClick}
+      >
         <div className='flex justify-between'>
           <p>{name}</p>
           <p>{code}</p>
