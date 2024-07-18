@@ -21,8 +21,13 @@ const initializeSocket = (server) => {
       socket.join(coursesIdParsed)
       userByRoom[userId] = { socketId: socket.id, rooms: coursesIdParsed }
 
-      console.log('Se ejecutó setRooms')
       console.log(io.sockets.adapter.rooms)
+    })
+
+    socket.on('takeAttendance', (data) => {
+      const { targetRoom } = data
+
+      io.to(targetRoom).emit('takeAttendance', 'Estoy tomando lista')
     })
 
     socket.on('disconnect', () => {

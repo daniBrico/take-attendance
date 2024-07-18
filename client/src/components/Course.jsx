@@ -1,11 +1,16 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function ListOfCourses({ name, code, numberOfStudents }) {
+function ListOfCourses({ name, code, numberOfStudents, id }) {
   const navigate = useNavigate()
 
   function handleClick() {
-    navigate('/course-home')
+    navigate('/course-home', {
+      state: {
+        name,
+        id
+      }
+    })
   }
 
   return (
@@ -35,6 +40,7 @@ export function Courses({ listOfCourses }) {
           name={course.name}
           code={course.code}
           numberOfStudents={course.numberOfStudents}
+          id={course.id}
         />
       ))
     : null

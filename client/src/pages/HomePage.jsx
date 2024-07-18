@@ -3,33 +3,15 @@ import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import { Courses } from '../components/Course'
-import { getCourses } from '../api/courses.js'
+import { useCourse } from '../context/CourseContext.jsx'
 
 function HomePage() {
   const { logout, user, userType, socketRef } = useAuth()
-  const [courses, setCourses] = useState(null)
+  const { courses } = useCourse()
 
   useEffect(() => {
-    async function axiosCourses() {
-      try {
-        const res = await getCourses(userType, user.id)
+    if (userType === 'professor') return
 
-        if (!res.status === 200) {
-          throw new Error('Error al cargar el curso')
-        }
-
-        const data = res.data
-
-        setCourses(data.courses)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-
-    axiosCourses()
-  }, [])
-
-  useEffect(() => {
     if (socketRef.current) {
       if (!courses) return
 
