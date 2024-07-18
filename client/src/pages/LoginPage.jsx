@@ -52,6 +52,7 @@ function LoginPage() {
           Login
         </button>
       </form>
+
       <p className='flex justify-between gap-x-2'>
         Don't have an account?
         <Link to='/register' className='text-sky-500'>

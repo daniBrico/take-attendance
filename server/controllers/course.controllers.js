@@ -8,6 +8,9 @@ export const createCourse = async (req, res) => {
   // Los estudiantes deben enviarse también como parámetros. Por momento, se van a tomar todos los alumnos registrados en la aplicación
   // El schedule debe enviarse como parámetro. Por el momento el horario y fecha va a estar establecido por defecto. O evitado.
 
+  console.log(subjectId)
+  console.log(professorId)
+
   try {
     const students = await Student.find({}, '_id')
 

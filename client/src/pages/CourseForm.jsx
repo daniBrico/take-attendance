@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
 import { getCareersNames, getSubjectsNames } from '../api/career'
+import { createCourse } from '../api/courses'
 
 function CourseForm() {
   const { logout, user, userType } = useAuth()
@@ -11,25 +12,29 @@ function CourseForm() {
   const [careerSelected, setCareerSelected] = useState(null)
   const [subjectsNames, setSubjectsNames] = useState([])
   const [selectSubjectsIsDisabled, setSelectSubjectsIsDisabled] = useState(true)
-  const [subjectSelected, setSubjectSelected] = useState(null)
+  const [subjectSelectedId, setsubjectSelectedId] = useState(null)
 
-  const handleClick = () => {
+  const handleCreateCourse = async () => {
     if (!careerSelected) {
       console.log('La carrera no está establecida')
       return
     }
 
-    if (!subjectSelected) {
+    if (!subjectSelectedId) {
       console.log('La materia no está establecida')
       return
     }
 
-    // Puedo crear el curso
+    try {
+      const res = await createCourse(subjectSelectedId, user.id)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const handleSelectCareerChange = ({ value }) => setCareerSelected(value)
 
-  const handleSelectSubjectChange = ({ value }) => setSubjectSelected(value)
+  const handleSelectSubjectChange = ({ value }) => setsubjectSelectedId(value)
 
   useEffect(() => {
     const initializeCareersNames = async () => {
@@ -103,7 +108,7 @@ function CourseForm() {
           </Link>
           <button
             className='rounded-lg bg-slate-700 px-2 py-1 transition hover:bg-slate-500'
-            onClick={handleClick}
+            onClick={handleCreateCourse}
           >
             Agregar
           </button>

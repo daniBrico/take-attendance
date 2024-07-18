@@ -28,12 +28,14 @@ function ListOfCourses({ name, code, numberOfStudents }) {
 }
 
 export function Courses({ listOfCourses }) {
-  return listOfCourses.map((course) => (
-    <ListOfCourses
-      key={course.code}
-      name={course.name}
-      code={course.code}
-      numberOfStudents={course.numberOfStudents}
-    />
-  ))
+  return listOfCourses
+    ? listOfCourses.map((course) => (
+        <ListOfCourses
+          key={course.code}
+          name={course.name}
+          code={course.code}
+          numberOfStudents={course.numberOfStudents}
+        />
+      ))
+    : null
 }

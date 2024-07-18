@@ -1,7 +1,8 @@
-import { createContext, useState, useContext, useEffect } from 'react'
+import { createContext, useState, useContext, useEffect, useRef } from 'react'
 import { registerRequest, loginRequest, verifyTokenRequest } from '../api/auth'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
+import io from 'socket.io-client'
 
 export const AuthContext = createContext()
 
@@ -21,10 +22,11 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState([])
   const [loading, setLoading] = useState(true)
   const [userType, setUserType] = useState('')
+  let socketRef = useRef(null)
 
-  const signUp = async (user) => {
+  const signUp = async (signInUser) => {
     try {
-      const res = await registerRequest(user)
+      const res = await registerRequest(signInUser)
       setUser(res.data)
       setIsAuthenticated(true)
     } catch (err) {
@@ -32,14 +34,16 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const signIn = async (user) => {
+  const signIn = async (signInUser) => {
     try {
-      const res = await loginRequest(user)
+      const res = await loginRequest(signInUser)
       const cookies = Cookies.get()
       const decoded = jwtDecode(cookies.token)
 
       setUser(res.data)
       setIsAuthenticated(true)
+
+      newSocketConnection()
 
       setUserType(decoded.role)
     } catch (err) {
@@ -52,6 +56,19 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false)
     setUser(null)
     setUserType('')
+
+    if (socketRef.current) {
+      socketRef.current.disconnect()
+      socketRef.current = null
+    }
+  }
+
+  const newSocketConnection = () => {
+    if (socketRef.current) {
+      socketRef.current.disconnect()
+    }
+
+    socketRef.current = io('http://localhost:3000')
   }
 
   useEffect(() => {
@@ -90,12 +107,15 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true)
         setUser(res.data)
         setLoading(false)
+
+        newSocketConnection()
       } catch (err) {
         setIsAuthenticated(false)
         setUser(null)
         setLoading(false)
       }
     }
+
     checkLogin()
   }, [])
 
@@ -109,7 +129,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         user,
         isAuthenticated,
-        errors
+        errors,
+        socketRef
       }}
     >
       {children}

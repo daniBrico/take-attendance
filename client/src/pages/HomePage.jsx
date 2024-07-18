@@ -6,8 +6,8 @@ import { Courses } from '../components/Course'
 import { getCourses } from '../api/courses.js'
 
 function HomePage() {
-  const { logout, user, userType } = useAuth()
-  const [courses, setCourses] = useState([])
+  const { logout, user, userType, socketRef } = useAuth()
+  const [courses, setCourses] = useState(null)
 
   useEffect(() => {
     async function axiosCourses() {
@@ -29,6 +29,19 @@ function HomePage() {
     axiosCourses()
   }, [])
 
+  useEffect(() => {
+    if (socketRef.current) {
+      if (!courses) return
+
+      const coursesId = courses.map((course) => course.id)
+
+      socketRef.current.emit('setRooms', {
+        userId: user.id,
+        coursesId: JSON.stringify(coursesId)
+      })
+    }
+  }, [courses])
+
   return (
     <>
       <Header user={user} logout={logout} userType={userType} />
@@ -44,9 +57,7 @@ function HomePage() {
           >
             Agregar curso
           </Link>
-        ) : (
-          ''
-        )}
+        ) : null}
       </main>
     </>
   )

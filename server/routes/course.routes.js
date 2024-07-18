@@ -3,8 +3,8 @@ import { createCourse, getCourses } from '../controllers/course.controllers.js'
 
 const router = Router()
 
-router.post('/', createCourse)
-
 router.get('/', getCourses)
+
+router.post('/', createCourse)
 
 export default router

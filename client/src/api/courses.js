@@ -7,3 +7,9 @@ export const getCourses = (userType, userId) =>
       userId
     }
   })
+
+export const createCourse = (subjectId, professorId) =>
+  axios.post('/course/', {
+    subjectId,
+    professorId
+  })
