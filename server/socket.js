@@ -25,10 +25,15 @@ const initializeSocket = (server) => {
     })
 
     socket.on('takeAttendance', (data) => {
-      const { targetRoom } = data
+      const { targetRoom, courseName, professorName } = data
 
-      io.to(targetRoom).emit('takeAttendance', 'Estoy tomando lista')
+      io.to(targetRoom).emit('takeAttendance', {
+        courseName,
+        professorName,
+      })
     })
+
+    socket.on('toBePresent', (data) => {})
 
     socket.on('disconnect', () => {
       console.log('a user has disconnected')

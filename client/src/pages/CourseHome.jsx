@@ -15,7 +15,9 @@ function CourseHome() {
     console.log('Tomar lista')
 
     socketRef.current.emit('takeAttendance', {
-      targetRoom: id
+      targetRoom: id,
+      courseName: name,
+      professorName: user.name
     })
 
     setTakeAttendance(true)

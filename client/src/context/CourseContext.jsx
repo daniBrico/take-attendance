@@ -37,9 +37,18 @@ export const CourseProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    socketRef.current.on('takeAttendance', (message) => {
-      console.log(message)
+    socketRef.current.on('takeAttendance', (data) => {
+      console.log(
+        `El profesor ${data.professorName} a cargo del curso de ${data.courseName}, está tomando lista.`
+      )
     })
+
+    // Tengo que pensar como hacer que el alumno de el presente y le llegue al profesor
+
+    // socketRef.current.emit('toBePresent', {
+    //   studentName: user.name,
+
+    // })
   }, [takeAttendance])
 
   return (

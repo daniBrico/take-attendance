@@ -17,6 +17,7 @@ function HomePage() {
 
       const coursesId = courses.map((course) => course.id)
 
+      // Establece las rooms. Una por cada curso al cual este adherido
       socketRef.current.emit('setRooms', {
         userId: user.id,
         coursesId: JSON.stringify(coursesId)
