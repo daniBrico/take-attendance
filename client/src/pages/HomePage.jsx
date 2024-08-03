@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
@@ -17,7 +17,7 @@ function HomePage() {
 
       const coursesId = courses.map((course) => course.id)
 
-      // Establece las rooms. Una por cada curso al cual este adherido
+      // Sets the rooms. One for each course the student is assigned to.
       socketRef.current.emit('setRooms', {
         userId: user.id,
         coursesId: JSON.stringify(coursesId)

@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import { useAuth } from '../context/AuthContext'
 import { useLocation } from 'react-router-dom'
 import { useCourse } from '../context/CourseContext'
+import TakeAttendanceButton from '../components/TakeAttendanceButton'
 
 function CourseHome() {
   const { user, logout, userType, socketRef } = useAuth()
@@ -14,6 +15,7 @@ function CourseHome() {
   function takeAttendance() {
     console.log('Tomar lista')
 
+    // This event allows taking attendance
     socketRef.current.emit('takeAttendance', {
       targetRoom: id,
       courseName: name,
@@ -33,18 +35,10 @@ function CourseHome() {
           información relevante y más funcionalidades
         </p>
       </div>
-
-      {userType === 'professor' ? (
-        <div className='flex'>
-          <button
-            type='button'
-            className='mx-auto rounded-md bg-gradient-to-r from-green-400 to-blue-500 px-4 py-2 font-semibold text-white transition-all duration-300 hover:from-green-500 hover:to-blue-600'
-            onClick={takeAttendance}
-          >
-            Tomar lista
-          </button>
-        </div>
-      ) : null}
+      <TakeAttendanceButton
+        userType={userType}
+        takeAttendance={takeAttendance}
+      ></TakeAttendanceButton>
     </>
   )
 }

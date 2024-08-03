@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { getCourses } from '../api/courses'
+import { getUserCourses } from '../api/courses'
 import { useAuth } from './AuthContext'
 
 export const CourseContext = createContext()
@@ -19,9 +19,9 @@ export const CourseProvider = ({ children }) => {
   const { userType, user, socketRef } = useAuth()
 
   useEffect(() => {
-    async function axiosCourses() {
+    async function axiosSetCourses() {
       try {
-        const res = await getCourses(userType, user.id)
+        const res = await getUserCourses(userType, user.id)
 
         if (!res.status === 200) throw new Error('Error al cargar el curso')
 
@@ -33,10 +33,11 @@ export const CourseProvider = ({ children }) => {
       }
     }
 
-    axiosCourses()
+    axiosSetCourses()
   }, [])
 
   useEffect(() => {
+    // Frontend event that listens for attendance updates
     socketRef.current.on('takeAttendance', (data) => {
       console.log(
         `El profesor ${data.professorName} a cargo del curso de ${data.courseName}, está tomando lista.`
@@ -44,11 +45,6 @@ export const CourseProvider = ({ children }) => {
     })
 
     // Tengo que pensar como hacer que el alumno de el presente y le llegue al profesor
-
-    // socketRef.current.emit('toBePresent', {
-    //   studentName: user.name,
-
-    // })
   }, [takeAttendance])
 
   return (

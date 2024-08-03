@@ -1,6 +1,6 @@
 import axios from './axios.js'
 
-export const getCourses = (userType, userId) =>
+export const getUserCourses = (userType, userId) =>
   axios.get('/course/', {
     params: {
       userType,

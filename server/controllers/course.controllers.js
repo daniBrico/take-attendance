@@ -32,7 +32,7 @@ export const createCourse = async (req, res) => {
   }
 }
 
-export const getCourses = async (req, res) => {
+export const getUserCourses = async (req, res) => {
   const { userType, userId } = req.query
 
   try {

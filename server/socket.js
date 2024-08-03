@@ -21,7 +21,7 @@ const initializeSocket = (server) => {
       socket.join(coursesIdParsed)
       userByRoom[userId] = { socketId: socket.id, rooms: coursesIdParsed }
 
-      console.log(io.sockets.adapter.rooms)
+      // console.log(io.sockets.adapter.rooms)
     })
 
     socket.on('takeAttendance', (data) => {
@@ -33,7 +33,7 @@ const initializeSocket = (server) => {
       })
     })
 
-    socket.on('toBePresent', (data) => {})
+    // socket.on('toBePresent', (data) => {})
 
     socket.on('disconnect', () => {
       console.log('a user has disconnected')
