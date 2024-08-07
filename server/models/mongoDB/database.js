@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-export const databaseConnection = async () => {
+export const openDatabaseConnection = async () => {
   // No queremos que este tipeada en código. Tenemos que usar variables de entorno.
   const { RTATT_MONGODB_HOST, RTATT_MONGODB_DATABASE } = process.env
   const MONGODB_URI = `mongodb://${RTATT_MONGODB_HOST}/${RTATT_MONGODB_DATABASE}`
@@ -18,6 +18,6 @@ export const closeDatabaseConnection = async () => {
     await mongoose.connection.close()
     console.log('DB connection closed')
   } catch (err) {
-    console.log(err)
+    console.log('Error closing the database: ', err)
   }
 }

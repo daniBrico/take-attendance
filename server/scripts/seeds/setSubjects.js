@@ -1,19 +1,19 @@
 import { createRequire } from 'node:module'
 import Subject from '../../models/mongoDB/schemas/college/Subject.js'
 import {
-  databaseConnection,
+  openDatabaseConnection,
   closeDatabaseConnection,
 } from '../../models/mongoDB/database.js'
 import { dotenvConfig } from '../../config/config.js'
 
 dotenvConfig()
 
-databaseConnection()
+openDatabaseConnection()
   .then(() => {
     seedDatabase()
   })
   .catch((err) => {
-    console.error('Error conectando a MongoDB:', err)
+    console.error('Error conectando a MongoDB: ', err)
   })
 
 const seedDatabase = async () => {
