@@ -21,7 +21,7 @@ const initializeSocket = (server) => {
       socket.join(coursesIdParsed)
       userByRoom[userId] = { socketId: socket.id, rooms: coursesIdParsed }
 
-      // console.log(io.sockets.adapter.rooms)
+      console.log(io.sockets.adapter.rooms)
     })
 
     socket.on('takeAttendance', (data) => {

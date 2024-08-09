@@ -24,41 +24,17 @@ export const AuthProvider = ({ children }) => {
   const [userType, setUserType] = useState('')
   let socketRef = useRef(null)
 
-  const signUp = async (signInUser) => {
-    try {
-      const res = await registerRequest(signInUser)
-      const cookies = Cookies.get()
-      const decoded = jwtDecode(cookies.token)
+  const handleAuthSuccess = (res) => {
+    const cookies = Cookies.get()
+    const decoded = jwtDecode(cookies.token)
 
-      setUser(res.data)
-      setIsAuthenticated(true)
-
-      newSocketConnection()
-
-      setUserType(decoded.role)
-    } catch (err) {
-      setErrors(err.response.data.message)
-    }
+    setUser(res.data)
+    setIsAuthenticated(true)
+    newSocketConnection()
+    setUserType(decoded.role)
   }
 
-  const signIn = async (signInUser) => {
-    try {
-      const res = await loginRequest(signInUser)
-      const cookies = Cookies.get()
-      const decoded = jwtDecode(cookies.token)
-
-      setUser(res.data)
-      setIsAuthenticated(true)
-
-      newSocketConnection()
-
-      setUserType(decoded.role)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const logout = () => {
+  const resetAuthState = () => {
     Cookies.remove('token')
     setIsAuthenticated(false)
     setUser(null)
@@ -68,6 +44,30 @@ export const AuthProvider = ({ children }) => {
       socketRef.current.disconnect()
       socketRef.current = null
     }
+  }
+
+  const signUp = async (signInUser) => {
+    try {
+      const res = await registerRequest(signInUser)
+
+      handleAuthSuccess(res)
+    } catch (err) {
+      setErrors(err.response.data.message)
+    }
+  }
+
+  const signIn = async (signInUser) => {
+    try {
+      const res = await loginRequest(signInUser)
+
+      handleAuthSuccess(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const logout = () => {
+    resetAuthState()
   }
 
   const newSocketConnection = () => {
@@ -93,33 +93,27 @@ export const AuthProvider = ({ children }) => {
       const cookies = Cookies.get()
 
       if (!cookies.token) {
-        setIsAuthenticated(false)
-        setLoading(false)
+        resetAuthState()
 
-        return setUser(null)
+        setLoading(false)
+        return
       }
 
       try {
         const res = await verifyTokenRequest(cookies.token)
 
         if (!res.data) {
-          setIsAuthenticated(false)
+          resetAuthState()
+
           setLoading(false)
           return
         }
 
-        console.log('Entra?')
-        const decoded = jwtDecode(cookies.token)
+        handleAuthSuccess(res, cookies)
 
-        setUserType(decoded.role)
-        setIsAuthenticated(true)
-        setUser(res.data)
         setLoading(false)
-
-        newSocketConnection()
       } catch (err) {
-        setIsAuthenticated(false)
-        setUser(null)
+        resetAuthState()
         setLoading(false)
       }
     }
