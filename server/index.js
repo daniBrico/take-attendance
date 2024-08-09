@@ -2,7 +2,7 @@ import { createServer } from 'node:http'
 import { app } from './app.js'
 import { initializeSocket } from './socket.js'
 import { config } from 'dotenv'
-import { databaseConnection } from './models/mongoDB/database.js'
+import { openDatabaseConnection } from './models/mongoDB/database.js'
 
 const port = process.env.PORT ?? 3000
 
@@ -17,4 +17,4 @@ server.listen(port, () => {
 })
 
 config()
-databaseConnection()
+openDatabaseConnection()

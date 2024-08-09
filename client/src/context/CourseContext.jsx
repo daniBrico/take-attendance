@@ -37,6 +37,8 @@ export const CourseProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
+    if (!takeAttendance) return
+
     // Frontend event that listens for attendance updates
     socketRef.current.on('takeAttendance', (data) => {
       console.log(

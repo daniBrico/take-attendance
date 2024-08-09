@@ -27,8 +27,15 @@ export const AuthProvider = ({ children }) => {
   const signUp = async (signInUser) => {
     try {
       const res = await registerRequest(signInUser)
+      const cookies = Cookies.get()
+      const decoded = jwtDecode(cookies.token)
+
       setUser(res.data)
       setIsAuthenticated(true)
+
+      newSocketConnection()
+
+      setUserType(decoded.role)
     } catch (err) {
       setErrors(err.response.data.message)
     }
@@ -101,6 +108,7 @@ export const AuthProvider = ({ children }) => {
           return
         }
 
+        console.log('Entra?')
         const decoded = jwtDecode(cookies.token)
 
         setUserType(decoded.role)

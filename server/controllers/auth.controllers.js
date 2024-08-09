@@ -10,7 +10,7 @@ const saveUser = async (UserModel, userData, res) => {
     let userType = 'student'
 
     if (newUser.collection.collectionName === 'professors')
-      userType = 'proffesor'
+      userType = 'professor'
 
     newUser.password = await newUser.encryptPassword(userData.password)
     const userSaved = await newUser.save()
