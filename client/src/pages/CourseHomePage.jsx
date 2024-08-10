@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { useCourse } from '../context/CourseContext'
 import TakeAttendanceButton from '../components/TakeAttendanceButton'
 
-function CourseHome() {
+function CourseHomePage() {
   const { user, logout, userType, socketRef } = useAuth()
   const { setTakeAttendance } = useCourse()
 
@@ -43,4 +43,4 @@ function CourseHome() {
   )
 }
 
-export default CourseHome
+export default CourseHomePage

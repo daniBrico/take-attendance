@@ -6,7 +6,7 @@ import Select from 'react-select'
 import { getCareersNames, getSubjectsNames } from '../api/career'
 import { createCourse } from '../api/courses'
 
-function CourseForm() {
+function CourseFormPage() {
   const { logout, user, userType } = useAuth()
   const [careerNames, setCareerNames] = useState([])
   const [careerSelected, setCareerSelected] = useState(null)
@@ -118,4 +118,4 @@ function CourseForm() {
   )
 }
 
-export default CourseForm
+export default CourseFormPage
