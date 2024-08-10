@@ -1,6 +1,7 @@
 import Student from '../models/mongoDB/schemas/auth/Student.js'
 import Subject from '../models/mongoDB/schemas/college/Subject.js'
 import Course from '../models/mongoDB/schemas/college/Course.js'
+import jwt from 'jsonwebtoken'
 
 export const createCourse = async (req, res) => {
   const { subjectId, professorId } = req.body
@@ -33,7 +34,8 @@ export const createCourse = async (req, res) => {
 }
 
 export const getUserCourses = async (req, res) => {
-  const { userType, userId } = req.query
+  const decoded = jwt.decode(req.cookies.token)
+  const { role: userType, id: userId } = decoded
 
   try {
     let foundCourses
@@ -44,10 +46,10 @@ export const getUserCourses = async (req, res) => {
       foundCourses = await Course.find({ professor: userId })
     }
 
-    if (!foundCourses || foundCourses.length === 0) {
-      return res
-        .status(404)
-        .json({ message: 'No se encontraron cursos para este usuario' })
+    if (foundCourses.length === 0) {
+      return res.status(204).json({
+        message: 'El usuario no tiene cursos registrados en la base de datos',
+      })
     }
 
     const courseInformation = []

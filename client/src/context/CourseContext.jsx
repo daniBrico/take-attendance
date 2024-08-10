@@ -16,20 +16,19 @@ export const useCourse = () => {
 export const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState(null)
   const [takeAttendance, setTakeAttendance] = useState(false)
-  const { userType, user, socketRef } = useAuth()
+  const { socketRef } = useAuth()
 
   useEffect(() => {
     async function axiosSetCourses() {
       try {
-        const res = await getUserCourses(userType, user.id)
+        const res = await getUserCourses()
 
-        if (!res.status === 200) throw new Error('Error al cargar el curso')
-
-        const data = res.data
-
-        setCourses(data.courses)
+        if (res.status === 200) {
+          const data = res.data
+          setCourses(data.courses)
+        }
       } catch (err) {
-        console.log(err)
+        console.log('Ha ocurrido un error en la carga de los cursos: ', err)
       }
     }
 

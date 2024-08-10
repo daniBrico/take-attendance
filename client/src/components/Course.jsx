@@ -25,7 +25,6 @@ function ListOfCourses({ name, code, numberOfStudents, id }) {
         </div>
         <div className='flex justify-between'>
           <p>Alumnos: {numberOfStudents}</p>
-          {/* <p>Lun/Miér/Vier</p> */}
         </div>
       </div>
     </>
@@ -33,15 +32,17 @@ function ListOfCourses({ name, code, numberOfStudents, id }) {
 }
 
 export function Courses({ listOfCourses }) {
-  return listOfCourses
-    ? listOfCourses.map((course) => (
-        <ListOfCourses
-          key={course.code}
-          name={course.name}
-          code={course.code}
-          numberOfStudents={course.numberOfStudents}
-          id={course.id}
-        />
-      ))
-    : null
+  return listOfCourses ? (
+    listOfCourses.map((course) => (
+      <ListOfCourses
+        key={course.code}
+        name={course.name}
+        code={course.code}
+        numberOfStudents={course.numberOfStudents}
+        id={course.id}
+      />
+    ))
+  ) : (
+    <h2>No hay cursos para cargar</h2>
+  )
 }

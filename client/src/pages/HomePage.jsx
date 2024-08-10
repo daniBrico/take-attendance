@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
-import { Link } from 'react-router-dom'
 import { Courses } from '../components/Course'
 import { useCourse } from '../context/CourseContext.jsx'
+import { Home } from '../components/Home.jsx'
 
 function HomePage() {
   const { logout, user, userType, socketRef } = useAuth()
@@ -33,14 +33,7 @@ function HomePage() {
         <article className='grid w-full max-w-3xl grid-cols-1 gap-1 sm:grid-cols-2'>
           <Courses listOfCourses={courses} />
         </article>
-        {userType === 'professor' ? (
-          <Link
-            to='/create-course'
-            className='mt-4 rounded-lg bg-slate-400 px-2 py-1'
-          >
-            Agregar curso
-          </Link>
-        ) : null}
+        <Home userType={userType} />
       </main>
     </>
   )
