@@ -2,30 +2,39 @@ import Student from '../models/mongoDB/schemas/auth/Student.js'
 import Subject from '../models/mongoDB/schemas/college/Subject.js'
 import Course from '../models/mongoDB/schemas/college/Course.js'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
+
+const generateCourseCode = (courseId) => {
+  const hash = crypto
+    .createHash('md5')
+    .update(courseId.toString())
+    .digest('hex')
+
+  const shortCode = hash.substring(0, 6)
+
+  return shortCode.toUpperCase()
+}
 
 export const createCourse = async (req, res) => {
-  const { subjectId, professorId } = req.body
-
-  // Los estudiantes deben enviarse también como parámetros. Por momento, se van a tomar todos los alumnos registrados en la aplicación
-  // El schedule debe enviarse como parámetro. Por el momento el horario y fecha va a estar establecido por defecto. O evitado.
-
-  console.log(subjectId)
-  console.log(professorId)
+  const { subjectId } = req.body
+  const decoded = jwt.decode(req.cookies.token)
+  const { id: professorId } = decoded
 
   try {
-    const students = await Student.find({}, '_id')
-
     const newCourse = new Course({
       subject: subjectId,
       professor: professorId,
-      students,
     })
+
+    console.log(newCourse)
+
+    const codeGenerated = generateCourseCode(newCourse._id)
+
+    newCourse.code = codeGenerated
 
     await newCourse.save()
 
-    res
-      .status(201)
-      .json({ message: 'Curso creado exitosamente', course: newCourse })
+    res.status(201).json({ message: 'Curso creado exitosamente' })
   } catch (err) {
     res
       .status(500)

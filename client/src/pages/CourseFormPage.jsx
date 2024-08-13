@@ -26,9 +26,9 @@ function CourseFormPage() {
     }
 
     try {
-      const res = await createCourse(subjectSelectedId, user.id)
+      await createCourse(subjectSelectedId)
     } catch (err) {
-      console.log(err)
+      console.log('Error al crear curso en la base de datos: ', err)
     }
   }
 
@@ -101,7 +101,7 @@ function CourseFormPage() {
         </form>
         <div className='mt-4 flex justify-center gap-2'>
           <Link
-            to='/homepage'
+            to='/home'
             className='rounded-lg bg-slate-700 px-2 py-1 transition hover:bg-slate-500'
           >
             Cancelar

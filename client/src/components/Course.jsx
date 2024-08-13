@@ -35,7 +35,7 @@ export function Courses({ listOfCourses }) {
   return listOfCourses ? (
     listOfCourses.map((course) => (
       <ListOfCourses
-        key={course.code}
+        key={course.id}
         name={course.name}
         code={course.code}
         numberOfStudents={course.numberOfStudents}

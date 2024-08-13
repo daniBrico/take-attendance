@@ -16,6 +16,10 @@ const CourseSchema = new Schema({
       ref: 'Student',
     },
   ],
+  code: {
+    type: String,
+    unique: true,
+  },
   // schedule: [
   //   {
   //     days: {
