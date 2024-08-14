@@ -7,7 +7,7 @@ import { Home } from '../components/Home.jsx'
 
 function HomePage() {
   const { logout, user, userType, socketRef } = useAuth()
-  const { courses } = useCourse()
+  const { courses, setCourses } = useCourse()
 
   useEffect(() => {
     if (userType === 'professor') return
@@ -33,7 +33,7 @@ function HomePage() {
         <article className='grid w-full max-w-3xl grid-cols-1 gap-1 sm:grid-cols-2'>
           <Courses listOfCourses={courses} />
         </article>
-        <Home userType={userType} />
+        <Home userType={userType} setCourses={setCourses} courses={courses} />
       </main>
     </>
   )

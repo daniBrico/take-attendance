@@ -43,6 +43,6 @@ export function Courses({ listOfCourses }) {
       />
     ))
   ) : (
-    <h2>No hay cursos para cargar</h2>
+    <h2 className='mb-5 text-center'>No hay cursos para cargar</h2>
   )
 }

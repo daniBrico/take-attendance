@@ -14,7 +14,7 @@ export const useCourse = () => {
 }
 
 export const CourseProvider = ({ children }) => {
-  const [courses, setCourses] = useState(null)
+  const [courses, setCourses] = useState([])
   const [takeAttendance, setTakeAttendance] = useState(false)
   const { socketRef } = useAuth()
 
@@ -52,6 +52,7 @@ export const CourseProvider = ({ children }) => {
     <CourseContext.Provider
       value={{
         courses,
+        setCourses,
         setTakeAttendance
       }}
     >

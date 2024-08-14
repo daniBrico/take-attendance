@@ -12,7 +12,7 @@ const initializeSocket = (server) => {
   })
 
   io.on('connection', (socket) => {
-    console.log(Array.from(io.sockets.sockets.keys()))
+    console.log("Connected users ID's: ", Array.from(io.sockets.sockets.keys()))
 
     socket.on('setRooms', (data) => {
       const { userId, coursesId } = data
@@ -21,7 +21,7 @@ const initializeSocket = (server) => {
       socket.join(coursesIdParsed)
       userByRoom[userId] = { socketId: socket.id, rooms: coursesIdParsed }
 
-      console.log(io.sockets.adapter.rooms)
+      console.log('Currently created rooms: ', io.sockets.adapter.rooms)
     })
 
     socket.on('takeAttendance', (data) => {
@@ -37,8 +37,11 @@ const initializeSocket = (server) => {
 
     socket.on('disconnect', () => {
       console.log('a user has disconnected')
-      console.log(Array.from(io.sockets.sockets.keys())) // Con esto obtengo los ID's de los conectados
-      console.log(io.sockets.adapter.rooms) // Con esto obtengo las rooms que existen actualmente
+      console.log(
+        "Connected users ID's: ",
+        Array.from(io.sockets.sockets.keys())
+      ) // Con esto obtengo los ID's de los conectados
+      console.log('Currently created rooms: ', io.sockets.adapter.rooms) // Con esto obtengo las rooms que existen actualmente
     })
   })
 }

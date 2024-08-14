@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { useAuth } from '../context/AuthContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { getCareersNames, getSubjectsNames } from '../api/career'
 import { createCourse } from '../api/courses'
@@ -13,6 +13,8 @@ function CourseFormPage() {
   const [subjectsNames, setSubjectsNames] = useState([])
   const [selectSubjectsIsDisabled, setSelectSubjectsIsDisabled] = useState(true)
   const [subjectSelectedId, setsubjectSelectedId] = useState(null)
+
+  const navigate = useNavigate()
 
   const handleCreateCourse = async () => {
     if (!careerSelected) {
@@ -26,7 +28,9 @@ function CourseFormPage() {
     }
 
     try {
-      await createCourse(subjectSelectedId)
+      const res = await createCourse(subjectSelectedId)
+
+      if (res.status === 201) navigate('/home')
     } catch (err) {
       console.log('Error al crear curso en la base de datos: ', err)
     }
