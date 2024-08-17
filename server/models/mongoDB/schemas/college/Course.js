@@ -20,6 +20,27 @@ const CourseSchema = new Schema({
     type: String,
     unique: true,
   },
+  enrollmentsRequests: [
+    {
+      student: {
+        type: Schema.Types.ObjectId,
+        ref: 'Student',
+        required: true,
+      },
+      comment: {
+        type: String,
+      },
+      state: {
+        type: String,
+        enum: ['pendiente', 'aprobada', 'rechazada'],
+        required: true,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   // schedule: [
   //   {
   //     days: {

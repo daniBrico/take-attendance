@@ -25,6 +25,14 @@ function HomePage() {
     }
   }, [courses])
 
+  useEffect(() => {
+    if (!socketRef) return
+
+    socketRef.current.on('requestUserId', () => {
+      socketRef.current.emit('registerUser', user.id)
+    })
+  }, [user])
+
   return (
     <>
       <Header user={user} logout={logout} userType={userType} />

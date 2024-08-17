@@ -15,13 +15,7 @@ function HomeStudent({ setCourses, courses }) {
       const res = await joinCourseByCode(values.courseCode)
 
       if (res.status === 200) {
-        const data = res.data
-
-        if (courses) {
-          setCourses([...courses, data.course[0]])
-        } else {
-          setCourses(data.course)
-        }
+        // Mostrar mensaje de que la solicitud de ingreso fue enviada correctamente
       }
     } catch (err) {
       console.log(

@@ -1,6 +1,6 @@
 import { createServer } from 'node:http'
 import { app } from './app.js'
-import { initializeSocket } from './socket.js'
+import { initializeSocket } from './socket/socket.js'
 import { config } from 'dotenv'
 import { openDatabaseConnection } from './models/mongoDB/database.js'
 

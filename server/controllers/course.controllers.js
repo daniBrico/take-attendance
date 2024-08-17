@@ -2,6 +2,7 @@ import Subject from '../models/mongoDB/schemas/college/Subject.js'
 import Course from '../models/mongoDB/schemas/college/Course.js'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import { getSocketIo, getUserSocketMap } from '../socket/socket.js'
 
 const generateCourseCode = (courseId) => {
   const hash = crypto
@@ -88,7 +89,7 @@ export const getUserCourses = async (req, res) => {
   }
 }
 
-export const joinCourseByCode = async (req, res) => {
+export const submitCourseEnrollment = async (req, res) => {
   const { courseCode } = req.query
   const decoded = jwt.decode(req.cookies.token)
   const { id: studentId } = decoded
@@ -101,19 +102,51 @@ export const joinCourseByCode = async (req, res) => {
         .status(404)
         .json({ message: 'Código no valido. Curso no encontrado' })
 
-    const isAllReadyEnrolled = foundCourse.students.includes(studentId)
+    // Verifico si el alumno ya se encuentra inscripto al curso
+    const isAlreadyEnrolled = foundCourse.students.includes(studentId)
 
-    if (isAllReadyEnrolled)
+    if (isAlreadyEnrolled)
       return res.status(400).json({ message: 'Ya está inscripto al curso' })
 
-    foundCourse.students.push(studentId)
-    const course = [await foundCourse.save()]
+    // Si no está inscripto, verifico si el alumno ya envío la solicitud de ingreso anteriormente
+    const isRequestAlreadySent = foundCourse.enrollmentsRequests.some(
+      (obj) => obj.student.toString() === studentId
+    )
 
-    const courseInformation = await setCourseInformation(course)
+    if (isRequestAlreadySent)
+      return res.status(400).json({
+        message: 'La solicitud de ingreso al curso aún está pendiente',
+      })
+
+    // Envío la solicitud de ingreso al curso
+    const io = getSocketIo()
+
+    if (io) {
+      const userSocketMap = getUserSocketMap()
+
+      if (userSocketMap) {
+        const professorId = foundCourse.professor.toString()
+
+        // Verifico si el profesor se encuentra online
+        if (userSocketMap.has(professorId)) {
+          // Si está online envío la notificación
+          console.log('El profesor está dentro de userSocketMap')
+        }
+      }
+    }
+
+    // De cualquier forma, guardo la solicitud de ingreso al curso en la base de datos
+    const newEnrollmentRequest = {
+      student: studentId,
+      state: 'pendiente',
+    }
+
+    foundCourse.enrollmentsRequests.push(newEnrollmentRequest)
+
+    await foundCourse.save()
 
     res.status(200).json({
-      message: 'Alumno inscripto exitosamente',
-      course: courseInformation,
+      message: 'Solicitud de ingreso enviada correctamente',
     })
   } catch (err) {
     res
