@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import ProtectedRoute from './components/ProtectedRoute'
 import CourseFormPage from './pages/CourseFormPage'
 import CourseHomePage from './pages/CourseHomePage'
+import EnrollmentRequestsPage from './pages/EnrollmentRequestsPage'
 import { CourseProvider } from './context/CourseContext'
 
 export function App() {
@@ -30,6 +31,10 @@ export function App() {
             }
           />
           <Route path='/create-course' element={<CourseFormPage />} />
+          <Route
+            path='/enrollment-requests'
+            element={<EnrollmentRequestsPage />}
+          />
         </Route>
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />

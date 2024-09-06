@@ -4,6 +4,7 @@ import { initializeSocket } from './socket/socket.js'
 import { config } from 'dotenv'
 import { openDatabaseConnection } from './models/mongoDB/database.js'
 
+// Tengo que configurar esta variable de entorno
 const port = process.env.PORT ?? 3000
 
 // Creación del servidor http

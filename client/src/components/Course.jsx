@@ -5,12 +5,9 @@ function ListOfCourses({ name, code, numberOfStudents, id }) {
   const navigate = useNavigate()
 
   function handleClick() {
-    navigate('/course-home', {
-      state: {
-        name,
-        id
-      }
-    })
+    const courseInfo = { name, id }
+    localStorage.setItem('courseInfo', JSON.stringify(courseInfo))
+    navigate('/course-home')
   }
 
   return (

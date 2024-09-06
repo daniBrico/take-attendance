@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect, useRef } from 'react'
 import { registerRequest, loginRequest, verifyTokenRequest } from '../api/auth'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
-import io from 'socket.io-client'
+import { initSocket } from '../utils/socketService'
 
 export const AuthContext = createContext()
 
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
       socketRef.current.disconnect()
     }
 
-    socketRef.current = io('http://localhost:3000')
+    socketRef.current = initSocket()
   }
 
   useEffect(() => {

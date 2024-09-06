@@ -1,16 +1,17 @@
 import React from 'react'
 import Header from '../components/Header'
 import { useAuth } from '../context/AuthContext'
-import { useLocation } from 'react-router-dom'
 import { useCourse } from '../context/CourseContext'
 import TakeAttendanceButton from '../components/TakeAttendanceButton'
+import FooterCourse from '../components/FooterCourse'
 
 function CourseHomePage() {
   const { user, logout, userType, socketRef } = useAuth()
   const { setTakeAttendance } = useCourse()
 
-  const location = useLocation()
-  const { name, id } = location.state
+  const courseInfo = JSON.parse(localStorage.getItem('courseInfo'))
+
+  const { id, name } = courseInfo
 
   function takeAttendance() {
     console.log('Tomar lista')
@@ -39,6 +40,7 @@ function CourseHomePage() {
         userType={userType}
         takeAttendance={takeAttendance}
       ></TakeAttendanceButton>
+      <FooterCourse />
     </>
   )
 }

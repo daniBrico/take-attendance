@@ -130,7 +130,8 @@ export const submitCourseEnrollment = async (req, res) => {
         // Verifico si el profesor se encuentra online
         if (userSocketMap.has(professorId)) {
           // Si está online envío la notificación
-          console.log('El profesor está dentro de userSocketMap')
+          const socketIdTarget = userSocketMap.get(professorId)
+          io.to(socketIdTarget).emit('newEnrollmentRequest', null)
         }
       }
     }
