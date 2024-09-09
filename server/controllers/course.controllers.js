@@ -155,3 +155,37 @@ export const submitCourseEnrollment = async (req, res) => {
       .json({ message: 'Error al encontrar curso', error: err.message })
   }
 }
+
+export const getEnrollments = async (req, res) => {
+  const { courseId } = req.query
+
+  try {
+    const foundCourse = await Course.findById(courseId).populate({
+      path: 'enrollmentsRequests.student',
+      select: '_id name lastName',
+    })
+
+    if (!foundCourse)
+      return res
+        .status(404)
+        .json({ meesage: 'Id no valido. Curso no encontrado' })
+
+    if (foundCourse.enrollmentsRequests.length === 0)
+      return res.status(204).json({
+        message: 'El curso no tiene solicitudes de inscripción',
+      })
+
+    const enrollments = foundCourse.enrollmentsRequests.map((enrollment) => ({
+      _id: enrollment.student._id,
+      name: enrollment.student.name,
+      lastName: enrollment.student.lastName,
+    }))
+
+    res.status(200).json({
+      message: 'Funciona',
+      enrollments,
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}

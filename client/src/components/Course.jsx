@@ -1,10 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function ListOfCourses({ name, code, numberOfStudents, id }) {
+function ListOfCourses({
+  name,
+  code,
+  numberOfStudents,
+  id,
+  setCourseSelectedId
+}) {
   const navigate = useNavigate()
 
   function handleClick() {
+    setCourseSelectedId(id)
     const courseInfo = { name, id }
     localStorage.setItem('courseInfo', JSON.stringify(courseInfo))
     navigate('/course-home')
@@ -28,7 +35,7 @@ function ListOfCourses({ name, code, numberOfStudents, id }) {
   )
 }
 
-export function Courses({ listOfCourses }) {
+export function Courses({ listOfCourses, setCourseSelectedId }) {
   return listOfCourses ? (
     listOfCourses.map((course) => (
       <ListOfCourses
@@ -36,6 +43,7 @@ export function Courses({ listOfCourses }) {
         name={course.name}
         code={course.code}
         numberOfStudents={course.numberOfStudents}
+        setCourseSelectedId={setCourseSelectedId}
         id={course.id}
       />
     ))

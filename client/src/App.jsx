@@ -33,7 +33,11 @@ export function App() {
           <Route path='/create-course' element={<CourseFormPage />} />
           <Route
             path='/enrollment-requests'
-            element={<EnrollmentRequestsPage />}
+            element={
+              <CourseProvider>
+                <EnrollmentRequestsPage />
+              </CourseProvider>
+            }
           />
         </Route>
         <Route path='/login' element={<LoginPage />} />

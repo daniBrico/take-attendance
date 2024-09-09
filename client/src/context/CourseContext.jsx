@@ -15,6 +15,7 @@ export const useCourse = () => {
 
 export const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState([])
+  const [courseSelectedId, setCourseSelectedId] = useState(null)
   const [takeAttendance, setTakeAttendance] = useState(false)
   const { socketRef } = useAuth()
 
@@ -53,7 +54,9 @@ export const CourseProvider = ({ children }) => {
       value={{
         courses,
         setCourses,
-        setTakeAttendance
+        setTakeAttendance,
+        courseSelectedId,
+        setCourseSelectedId
       }}
     >
       {children}
