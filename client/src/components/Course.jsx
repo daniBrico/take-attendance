@@ -12,8 +12,8 @@ function ListOfCourses({
 
   function handleClick() {
     setCourseSelectedId(id)
-    const courseInfo = { name, id }
-    localStorage.setItem('courseInfo', JSON.stringify(courseInfo))
+    const courseSelected = { name, id }
+    localStorage.setItem('courseSelected', JSON.stringify(courseSelected))
     navigate('/course-home')
   }
 

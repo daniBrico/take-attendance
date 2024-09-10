@@ -3,7 +3,7 @@ import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import { AuthProvider } from './context/AuthContext'
 import HomePage from './pages/HomePage'
-import ProtectedRoute from './components/ProtectedRoute'
+import AuthenticatedRoute from './components/AuthenticatedRoute'
 import CourseFormPage from './pages/CourseFormPage'
 import CourseHomePage from './pages/CourseHomePage'
 import EnrollmentRequestsPage from './pages/EnrollmentRequestsPage'
@@ -13,7 +13,7 @@ export function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route element={<ProtectedRoute />}>
+        <Route element={<AuthenticatedRoute />}>
           <Route
             path='/home'
             element={
@@ -32,7 +32,7 @@ export function App() {
           />
           <Route path='/create-course' element={<CourseFormPage />} />
           <Route
-            path='/enrollment-requests'
+            path='/enrollments'
             element={
               <CourseProvider>
                 <EnrollmentRequestsPage />

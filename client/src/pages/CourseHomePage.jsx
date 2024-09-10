@@ -9,9 +9,9 @@ function CourseHomePage() {
   const { user, logout, userType, socketRef } = useAuth()
   const { setTakeAttendance } = useCourse()
 
-  const courseInfo = JSON.parse(localStorage.getItem('courseInfo'))
+  const courseSelected = JSON.parse(localStorage.getItem('courseSelected'))
 
-  const { id, name } = courseInfo
+  const { id, name } = courseSelected
 
   function takeAttendance() {
     console.log('Tomar lista')

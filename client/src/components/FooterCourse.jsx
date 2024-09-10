@@ -18,7 +18,7 @@ function FooterCourse() {
           <div className='px-1 py-2' onClick={handleClickHome}>
             <p>Curso</p>
           </div>
-          <Link className='px-1 py-2' to='/enrollment-requests'>
+          <Link className='px-1 py-2' to='/enrollments'>
             Inscripciones
           </Link>
         </div>
