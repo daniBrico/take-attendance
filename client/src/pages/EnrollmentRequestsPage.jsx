@@ -8,13 +8,13 @@ import { getEnrollments } from '../api/courses'
 
 function EnrollmentRequestsPage() {
   const { user, logout, userType } = useAuth()
-  const { courseSelectedId } = useCourse()
+  const { courseSelected } = useCourse()
   const [enrollments, setEnrollments] = useState([])
 
   useEffect(() => {
     async function enrollmentsRequests() {
       try {
-        const res = await getEnrollments(courseSelectedId)
+        const res = await getEnrollments(courseSelected.id)
 
         if (res.status === 200) {
           const data = res.data

@@ -7,13 +7,12 @@ import { Home } from '../components/Home.jsx'
 
 function HomePage() {
   const { logout, user, userType, socketRef } = useAuth()
-  const { courses, setCourses, courseSelectedId, setCourseSelectedId } =
-    useCourse()
+  const { courses, setCourses, courseSelected, setCourseSelected } = useCourse()
 
   useEffect(() => {
-    if (!courseSelectedId) return
+    if (!courseSelected) return
 
-    setCourseSelectedId(null)
+    setCourseSelected(null)
   }, [])
 
   useEffect(() => {
@@ -48,7 +47,7 @@ function HomePage() {
         <article className='grid w-full max-w-3xl grid-cols-1 gap-1 sm:grid-cols-2'>
           <Courses
             listOfCourses={courses}
-            setCourseSelectedId={setCourseSelectedId}
+            setCourseSelected={setCourseSelected}
           />
         </article>
         <Home userType={userType} setCourses={setCourses} courses={courses} />

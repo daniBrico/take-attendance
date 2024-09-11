@@ -52,7 +52,7 @@ function HomeProfessor() {
   return (
     <>
       <Link
-        to='/create-course'
+        to='/course/create'
         className='mt-4 rounded-lg bg-slate-400 px-2 py-1'
       >
         Agregar curso

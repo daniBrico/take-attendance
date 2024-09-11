@@ -7,9 +7,7 @@ import FooterCourse from '../components/FooterCourse'
 
 function CourseHomePage() {
   const { user, logout, userType, socketRef } = useAuth()
-  const { setTakeAttendance } = useCourse()
-
-  const courseSelected = JSON.parse(localStorage.getItem('courseSelected'))
+  const { setTakeAttendance, courseSelected } = useCourse()
 
   const { id, name } = courseSelected
 

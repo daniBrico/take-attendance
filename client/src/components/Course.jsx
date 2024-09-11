@@ -6,15 +6,13 @@ function ListOfCourses({
   code,
   numberOfStudents,
   id,
-  setCourseSelectedId
+  setCourseSelected
 }) {
   const navigate = useNavigate()
 
   function handleClick() {
-    setCourseSelectedId(id)
-    const courseSelected = { name, id }
-    localStorage.setItem('courseSelected', JSON.stringify(courseSelected))
-    navigate('/course-home')
+    setCourseSelected({ id, name })
+    navigate('/course')
   }
 
   return (
@@ -35,7 +33,7 @@ function ListOfCourses({
   )
 }
 
-export function Courses({ listOfCourses, setCourseSelectedId }) {
+export function Courses({ listOfCourses, setCourseSelected }) {
   return listOfCourses ? (
     listOfCourses.map((course) => (
       <ListOfCourses
@@ -43,7 +41,7 @@ export function Courses({ listOfCourses, setCourseSelectedId }) {
         name={course.name}
         code={course.code}
         numberOfStudents={course.numberOfStudents}
-        setCourseSelectedId={setCourseSelectedId}
+        setCourseSelected={setCourseSelected}
         id={course.id}
       />
     ))
