@@ -20,7 +20,7 @@ const CourseSchema = new Schema({
     type: String,
     unique: true,
   },
-  enrollmentsRequests: [
+  enrollments: [
     {
       student: {
         type: Schema.Types.ObjectId,

@@ -14,13 +14,13 @@ const CourseRoutes = () => (
   <CourseProvider>
     <Routes>
       <Route path='/' element={<HomePage />} />
+      <Route path='/course/create' element={<CourseFormPage />} />
       <Route element={<ProtectedHomeRoutes />}>
         <Route path='/course' element={<CourseHomePage />} />
         <Route
           path='/course/enrollments'
           element={<EnrollmentRequestsPage />}
         />
-        <Route path='/course/create' element={<CourseFormPage />} />
       </Route>
     </Routes>
   </CourseProvider>

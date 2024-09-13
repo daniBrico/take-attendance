@@ -30,7 +30,7 @@ function CourseFormPage() {
     try {
       const res = await createCourse(subjectSelectedId)
 
-      if (res.status === 201) navigate('/home')
+      if (res.status === 201) navigate('/')
     } catch (err) {
       console.log('Error al crear curso en la base de datos: ', err)
     }

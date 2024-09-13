@@ -3,14 +3,14 @@ import {
   createCourse,
   getEnrollments,
   getUserCourses,
-  submitCourseEnrollment,
+  setNewEnrollment,
 } from '../controllers/course.controllers.js'
 
 const router = Router()
 
 router.get('/', getUserCourses)
 
-router.get('/join', submitCourseEnrollment)
+router.get('/join', setNewEnrollment)
 router.get('/enrollments', getEnrollments)
 
 router.post('/', createCourse)

@@ -89,7 +89,7 @@ export const getUserCourses = async (req, res) => {
   }
 }
 
-export const submitCourseEnrollment = async (req, res) => {
+export const setNewEnrollment = async (req, res) => {
   const { courseCode } = req.query
   const decoded = jwt.decode(req.cookies.token)
   const { id: studentId } = decoded
@@ -109,7 +109,7 @@ export const submitCourseEnrollment = async (req, res) => {
       return res.status(400).json({ message: 'Ya está inscripto al curso' })
 
     // Si no está inscripto, verifico si el alumno ya envío la solicitud de ingreso anteriormente
-    const isRequestAlreadySent = foundCourse.enrollmentsRequests.some(
+    const isRequestAlreadySent = foundCourse.enrollments.some(
       (obj) => obj.student.toString() === studentId
     )
 
@@ -131,7 +131,7 @@ export const submitCourseEnrollment = async (req, res) => {
         if (userSocketMap.has(professorId)) {
           // Si está online envío la notificación
           const socketIdTarget = userSocketMap.get(professorId)
-          io.to(socketIdTarget).emit('newEnrollmentRequest', null)
+          io.to(socketIdTarget).emit('newEnrollment', null)
         }
       }
     }
@@ -142,7 +142,7 @@ export const submitCourseEnrollment = async (req, res) => {
       state: 'pendiente',
     }
 
-    foundCourse.enrollmentsRequests.push(newEnrollmentRequest)
+    foundCourse.enrollments.push(newEnrollmentRequest)
 
     await foundCourse.save()
 
@@ -161,7 +161,7 @@ export const getEnrollments = async (req, res) => {
 
   try {
     const foundCourse = await Course.findById(courseId).populate({
-      path: 'enrollmentsRequests.student',
+      path: 'enrollments.student',
       select: '_id name lastName',
     })
 
@@ -170,12 +170,12 @@ export const getEnrollments = async (req, res) => {
         .status(404)
         .json({ meesage: 'Id no valido. Curso no encontrado' })
 
-    if (foundCourse.enrollmentsRequests.length === 0)
+    if (foundCourse.enrollments.length === 0)
       return res.status(204).json({
         message: 'El curso no tiene solicitudes de inscripción',
       })
 
-    const enrollments = foundCourse.enrollmentsRequests.map((enrollment) => ({
+    const enrollments = foundCourse.enrollments.map((enrollment) => ({
       _id: enrollment.student._id,
       name: enrollment.student.name,
       lastName: enrollment.student.lastName,
