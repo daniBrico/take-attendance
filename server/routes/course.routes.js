@@ -1,5 +1,6 @@
 import Router from 'express'
 import {
+  agreeEnrollment,
   createCourse,
   getEnrollments,
   getUserCourses,
@@ -14,5 +15,7 @@ router.get('/join', setNewEnrollment)
 router.get('/enrollments', getEnrollments)
 
 router.post('/', createCourse)
+
+router.patch('/:courseId/enrollments/:studentId', agreeEnrollment)
 
 export default router

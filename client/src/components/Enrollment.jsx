@@ -1,12 +1,36 @@
 import React from 'react'
+import { agreeEnrollment } from '../api/courses'
 
-function ListOfEnrollments({ name }) {
+function ListOfEnrollments({ name, studentId, courseId, setEnrollments }) {
+  const handleAgreeEnrollment = () => {
+    async function axiosAgreeEnrollment() {
+      try {
+        const res = await agreeEnrollment(courseId, studentId)
+
+        if (res.status === 200) {
+          setEnrollments((prevEnrollments) =>
+            prevEnrollments.filter(
+              (enrollment) => enrollment.studentId !== studentId
+            )
+          )
+        }
+      } catch (err) {
+        console.log('Ha ocurrido un error al aceptar la inscripción: ', err)
+      }
+    }
+
+    axiosAgreeEnrollment()
+  }
+
   return (
     <>
       <section className='mt-3 px-3'>
         <article className='flex items-center justify-between gap-1 rounded-md'>
           <p>{name}</p>
-          <button className='rounded-md bg-slate-800 px-2 py-1'>
+          <button
+            onClick={handleAgreeEnrollment}
+            className='rounded-md bg-slate-800 px-2 py-1'
+          >
             Aceptar solicitud
           </button>
         </article>
@@ -15,10 +39,16 @@ function ListOfEnrollments({ name }) {
   )
 }
 
-export function Enrollments({ listOfEnrollments }) {
-  return listOfEnrollments ? (
+export function Enrollments({ listOfEnrollments, courseId, setEnrollments }) {
+  return listOfEnrollments.length > 0 ? (
     listOfEnrollments.map((enrollment) => (
-      <ListOfEnrollments key={enrollment._id} name={enrollment.name} />
+      <ListOfEnrollments
+        key={enrollment.studentId}
+        name={enrollment.name}
+        studentId={enrollment.studentId}
+        courseId={courseId}
+        setEnrollments={setEnrollments}
+      />
     ))
   ) : (
     <h2 className='mt-4 text-center'>No hay inscripciones para cargar</h2>

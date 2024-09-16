@@ -102,7 +102,6 @@ export const setNewEnrollment = async (req, res) => {
         .status(404)
         .json({ message: 'Código no valido. Curso no encontrado' })
 
-    // Verifico si el alumno ya se encuentra inscripto al curso
     const isAlreadyEnrolled = foundCourse.students.includes(studentId)
 
     if (isAlreadyEnrolled)
@@ -118,7 +117,7 @@ export const setNewEnrollment = async (req, res) => {
         message: 'La solicitud de ingreso al curso aún está pendiente',
       })
 
-    // Envío la solicitud de ingreso al curso
+    // Envío la notificación de ingreso al curso
     const io = getSocketIo()
 
     if (io) {
@@ -137,12 +136,12 @@ export const setNewEnrollment = async (req, res) => {
     }
 
     // De cualquier forma, guardo la solicitud de ingreso al curso en la base de datos
-    const newEnrollmentRequest = {
+    const newEnrollment = {
       student: studentId,
       state: 'pendiente',
     }
 
-    foundCourse.enrollments.push(newEnrollmentRequest)
+    foundCourse.enrollments.push(newEnrollment)
 
     await foundCourse.save()
 
@@ -150,9 +149,10 @@ export const setNewEnrollment = async (req, res) => {
       message: 'Solicitud de ingreso enviada correctamente',
     })
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: 'Error al encontrar curso', error: err.message })
+    res.status(500).json({
+      message: 'Error al agregar una nueva inscripción',
+      error: err.message,
+    })
   }
 }
 
@@ -176,7 +176,7 @@ export const getEnrollments = async (req, res) => {
       })
 
     const enrollments = foundCourse.enrollments.map((enrollment) => ({
-      _id: enrollment.student._id,
+      studentId: enrollment.student._id,
       name: enrollment.student.name,
       lastName: enrollment.student.lastName,
     }))
@@ -187,5 +187,55 @@ export const getEnrollments = async (req, res) => {
     })
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const agreeEnrollment = async (req, res) => {
+  const { courseId, studentId } = req.params
+
+  try {
+    const foundCourse = await Course.findById(courseId).populate('enrollments')
+
+    if (!foundCourse)
+      return res
+        .status(404)
+        .json({ message: 'Id no valido. Curso no encontrado.' })
+
+    if (foundCourse.enrollments.length === 0)
+      return res
+        .status(204)
+        .json({ message: 'El curso no tiene solicitudes de inscripción' })
+
+    const foundEnrollmentIndex = foundCourse.enrollments.findIndex(
+      (enrollment) => enrollment.student.toString() === studentId
+    )
+
+    if (foundEnrollmentIndex === -1)
+      return res.status(404).json({
+        message: 'El alumno no se encuentra en la lista de inscripción',
+      })
+
+    const foundEnrollment = foundCourse.enrollments[foundEnrollmentIndex]
+
+    if (!foundEnrollment.state === 'rechazada')
+      return res
+        .status(400)
+        .json({ message: 'La inscripción ha sido rechazada con anterioridad' })
+
+    if (foundCourse.students.includes(studentId))
+      return res
+        .status(400)
+        .json({ message: 'El estudiante ya se encuentra inscripto' })
+
+    foundCourse.students.push(studentId)
+    foundCourse.enrollments.splice(foundEnrollmentIndex, 1)
+
+    await foundCourse.save()
+
+    res.status(200).json({ message: 'Solicitud aceptada' })
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: 'Error al aceptar la inscripción', error: err.message })
   }
 }

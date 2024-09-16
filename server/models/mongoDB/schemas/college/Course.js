@@ -32,7 +32,7 @@ const CourseSchema = new Schema({
       },
       state: {
         type: String,
-        enum: ['pendiente', 'aprobada', 'rechazada'],
+        enum: ['pendiente', 'rechazada'],
         required: true,
       },
       date: {

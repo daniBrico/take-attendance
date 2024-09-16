@@ -21,7 +21,7 @@ function EnrollmentRequestsPage() {
           setEnrollments(data.enrollments)
         }
 
-        if (res.status === 204) setEnrollments(null)
+        if (res.status === 204) setEnrollments([])
       } catch (err) {
         console.log(
           'Ha ocurrido un error en la carga de las inscripciones: ',
@@ -37,7 +37,11 @@ function EnrollmentRequestsPage() {
     <>
       <Header user={user} logout={logout} userType={userType} />
       <h1 className='mt-2 text-center text-lg'>Solicitudes de Ingreso</h1>
-      <Enrollments listOfEnrollments={enrollments} />
+      <Enrollments
+        listOfEnrollments={enrollments}
+        courseId={courseSelected.id}
+        setEnrollments={setEnrollments}
+      />
       <FooterCourse />
     </>
   )
