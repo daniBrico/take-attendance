@@ -8,7 +8,7 @@ import { getEnrollments } from '../api/courses'
 
 function EnrollmentRequestsPage() {
   const { user, logout, userType } = useAuth()
-  const { courseSelected } = useCourse()
+  const { courseSelected, setCourses } = useCourse()
   const [enrollments, setEnrollments] = useState([])
 
   useEffect(() => {
@@ -41,6 +41,7 @@ function EnrollmentRequestsPage() {
         listOfEnrollments={enrollments}
         courseId={courseSelected.id}
         setEnrollments={setEnrollments}
+        setCourses={setCourses}
       />
       <FooterCourse />
     </>

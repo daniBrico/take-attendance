@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { getUserCourses } from '../api/courses'
+import { getCourses } from '../api/courses'
 import { useAuth } from './AuthContext'
 
 export const CourseContext = createContext()
@@ -22,7 +22,7 @@ export const CourseProvider = ({ children }) => {
   useEffect(() => {
     async function axiosSetCourses() {
       try {
-        const res = await getUserCourses()
+        const res = await getCourses()
 
         if (res.status === 200) {
           const data = res.data

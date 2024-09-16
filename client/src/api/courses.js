@@ -2,7 +2,7 @@ import axios from './axios.js'
 
 const prefix = '/course'
 
-export const getUserCourses = () => axios.get(`${prefix}/`)
+export const getCourses = () => axios.get(`${prefix}/`)
 
 export const joinCourseByCode = (courseCode) =>
   axios.get(`${prefix}/join?courseCode=${courseCode}`)

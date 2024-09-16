@@ -59,7 +59,7 @@ export const createCourse = async (req, res) => {
   }
 }
 
-export const getUserCourses = async (req, res) => {
+export const getCourses = async (req, res) => {
   const decoded = jwt.decode(req.cookies.token)
   const { role: userType, id: userId } = decoded
 
@@ -168,11 +168,11 @@ export const getEnrollments = async (req, res) => {
     if (!foundCourse)
       return res
         .status(404)
-        .json({ meesage: 'Id no valido. Curso no encontrado' })
+        .json({ meesage: 'Id no valido. Curso no encontrado.' })
 
     if (foundCourse.enrollments.length === 0)
       return res.status(204).json({
-        message: 'El curso no tiene solicitudes de inscripción',
+        message: 'El curso no tiene solicitudes de inscripción.',
       })
 
     const enrollments = foundCourse.enrollments.map((enrollment) => ({
@@ -203,8 +203,8 @@ export const agreeEnrollment = async (req, res) => {
 
     if (foundCourse.enrollments.length === 0)
       return res
-        .status(204)
-        .json({ message: 'El curso no tiene solicitudes de inscripción' })
+        .status(404)
+        .json({ message: 'El curso no tiene solicitudes de inscripción.' })
 
     const foundEnrollmentIndex = foundCourse.enrollments.findIndex(
       (enrollment) => enrollment.student.toString() === studentId
@@ -212,7 +212,7 @@ export const agreeEnrollment = async (req, res) => {
 
     if (foundEnrollmentIndex === -1)
       return res.status(404).json({
-        message: 'El alumno no se encuentra en la lista de inscripción',
+        message: 'El alumno no se encuentra en la lista de inscripción.',
       })
 
     const foundEnrollment = foundCourse.enrollments[foundEnrollmentIndex]
@@ -220,22 +220,23 @@ export const agreeEnrollment = async (req, res) => {
     if (!foundEnrollment.state === 'rechazada')
       return res
         .status(400)
-        .json({ message: 'La inscripción ha sido rechazada con anterioridad' })
+        .json({ message: 'La inscripción ha sido rechazada con anterioridad.' })
 
     if (foundCourse.students.includes(studentId))
       return res
         .status(400)
-        .json({ message: 'El estudiante ya se encuentra inscripto' })
+        .json({ message: 'El estudiante ya se encuentra inscripto.' })
 
     foundCourse.students.push(studentId)
     foundCourse.enrollments.splice(foundEnrollmentIndex, 1)
 
     await foundCourse.save()
 
-    res.status(200).json({ message: 'Solicitud aceptada' })
+    res.status(200).json({ message: 'Solicitud aceptada.' })
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: 'Error al aceptar la inscripción', error: err.message })
+    res.status(500).json({
+      message: 'Error al aceptar la inscripción: ',
+      error: err.message,
+    })
   }
 }

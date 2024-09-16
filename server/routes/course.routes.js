@@ -3,13 +3,13 @@ import {
   agreeEnrollment,
   createCourse,
   getEnrollments,
-  getUserCourses,
+  getCourses,
   setNewEnrollment,
 } from '../controllers/course.controllers.js'
 
 const router = Router()
 
-router.get('/', getUserCourses)
+router.get('/', getCourses)
 
 router.get('/join', setNewEnrollment)
 router.get('/enrollments', getEnrollments)

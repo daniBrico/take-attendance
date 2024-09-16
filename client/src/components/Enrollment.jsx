@@ -1,7 +1,13 @@
 import React from 'react'
 import { agreeEnrollment } from '../api/courses'
 
-function ListOfEnrollments({ name, studentId, courseId, setEnrollments }) {
+function ListOfEnrollments({
+  name,
+  studentId,
+  courseId,
+  setEnrollments,
+  setCourses
+}) {
   const handleAgreeEnrollment = () => {
     async function axiosAgreeEnrollment() {
       try {
@@ -13,6 +19,16 @@ function ListOfEnrollments({ name, studentId, courseId, setEnrollments }) {
               (enrollment) => enrollment.studentId !== studentId
             )
           )
+
+          setCourses((prevCourses) => {
+            const updatedCourses = prevCourses.map((course) =>
+              course.id === courseId
+                ? { ...course, numberOfStudents: course.numberOfStudents + 1 }
+                : course
+            )
+
+            return updatedCourses
+          })
         }
       } catch (err) {
         console.log('Ha ocurrido un error al aceptar la inscripción: ', err)
@@ -39,7 +55,12 @@ function ListOfEnrollments({ name, studentId, courseId, setEnrollments }) {
   )
 }
 
-export function Enrollments({ listOfEnrollments, courseId, setEnrollments }) {
+export function Enrollments({
+  listOfEnrollments,
+  courseId,
+  setEnrollments,
+  setCourses
+}) {
   return listOfEnrollments.length > 0 ? (
     listOfEnrollments.map((enrollment) => (
       <ListOfEnrollments
@@ -48,6 +69,7 @@ export function Enrollments({ listOfEnrollments, courseId, setEnrollments }) {
         studentId={enrollment.studentId}
         courseId={courseId}
         setEnrollments={setEnrollments}
+        setCourses={setCourses}
       />
     ))
   ) : (
