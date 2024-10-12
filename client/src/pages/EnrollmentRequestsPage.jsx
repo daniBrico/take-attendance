@@ -7,7 +7,7 @@ import { Enrollments } from '../components/Enrollment'
 import { getEnrollments } from '../api/courses'
 
 function EnrollmentRequestsPage() {
-  const { user, logout, userType } = useAuth()
+  const { user, logout, userType, socketRef } = useAuth()
   const { courseSelected, setCourses } = useCourse()
   const [enrollments, setEnrollments] = useState([])
 
@@ -42,6 +42,7 @@ function EnrollmentRequestsPage() {
         courseId={courseSelected.id}
         setEnrollments={setEnrollments}
         setCourses={setCourses}
+        socketRef={socketRef}
       />
       <FooterCourse />
     </>

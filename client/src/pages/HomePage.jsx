@@ -7,7 +7,7 @@ import { Home } from '../components/Home.jsx'
 
 function HomePage() {
   const { logout, user, userType, socketRef } = useAuth()
-  const { courses, setCourses, courseSelected, setCourseSelected } = useCourse()
+  const { courses, courseSelected, setCourseSelected } = useCourse()
 
   useEffect(() => {
     if (!courseSelected) return
@@ -21,7 +21,7 @@ function HomePage() {
     if (socketRef.current) {
       if (!courses) return
 
-      const coursesId = courses.map((course) => course.id)
+      const coursesId = courses.map((course) => course.courseId)
 
       // Sets the rooms. One for each course the student is assigned to.
       socketRef.current.emit('setRooms', {
@@ -50,7 +50,7 @@ function HomePage() {
             setCourseSelected={setCourseSelected}
           />
         </article>
-        <Home userType={userType} setCourses={setCourses} courses={courses} />
+        <Home userType={userType} />
       </main>
     </>
   )

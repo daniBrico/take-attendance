@@ -5,14 +5,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { getCareersNames, getSubjectsNames } from '../api/career'
 import { createCourse } from '../api/courses'
+import { useCourse } from '../context/CourseContext'
+import useUpdateCourses from '../hooks/updateCourses'
 
 function CourseFormPage() {
   const { logout, user, userType } = useAuth()
+  const { setCourses } = useCourse()
   const [careerNames, setCareerNames] = useState([])
   const [careerSelected, setCareerSelected] = useState(null)
   const [subjectsNames, setSubjectsNames] = useState([])
   const [selectSubjectsIsDisabled, setSelectSubjectsIsDisabled] = useState(true)
   const [subjectSelectedId, setsubjectSelectedId] = useState(null)
+  const updateCoursesCallback = useUpdateCourses(setCourses)
 
   const navigate = useNavigate()
 
@@ -30,7 +34,11 @@ function CourseFormPage() {
     try {
       const res = await createCourse(subjectSelectedId)
 
-      if (res.status === 201) navigate('/')
+      if (res.status === 201) {
+        updateCoursesCallback(res.data.courseInformation)
+
+        navigate('/')
+      }
     } catch (err) {
       console.log('Error al crear curso en la base de datos: ', err)
     }
@@ -105,7 +113,7 @@ function CourseFormPage() {
         </form>
         <div className='mt-4 flex justify-center gap-2'>
           <Link
-            to='/home'
+            to='/'
             className='rounded-lg bg-slate-700 px-2 py-1 transition hover:bg-slate-500'
           >
             Cancelar

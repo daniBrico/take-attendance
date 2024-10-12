@@ -1,6 +1,8 @@
 import io from 'socket.io-client'
 
 let socket
+const eventCallbacks = new Map()
+
 let onNewEnrollmentRequestCallback
 
 export const initSocket = () => {
@@ -13,7 +15,11 @@ export const initSocket = () => {
 
   socket.on('newEnrollmentRequest', () => {
     console.log('Notificación! Se recibío una nueva inscripción!')
-    if (onNewEnrollmentRequestCallback) onNewEnrollmentRequestCallback
+    // llamar al trigger para ejecutar la callback
+  })
+
+  socket.on('updateCourses', (updateCourseData) => {
+    triggerCallback('updateCourses', updateCourseData)
   })
 
   return socket
@@ -21,6 +27,21 @@ export const initSocket = () => {
 
 export const setOnNewEnrollmentRequestCallback = (callback) => {
   onNewEnrollmentRequestCallback = callback
+}
+
+export const registerCallback = (event, callback) => {
+  // No me estoy asegurando que no exista el evento, aunque no debería existir
+  eventCallbacks.set(event, callback)
+}
+
+export const unregisterCallback = (event, callback) => {
+  eventCallbacks.delete(event)
+}
+
+const triggerCallback = (event, data) => {
+  const callback = eventCallbacks.get(event)
+
+  if (callback) callback(data)
 }
 
 export const getSocket = () => socket

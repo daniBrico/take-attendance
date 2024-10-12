@@ -2,8 +2,8 @@ import { Server as SocketServer } from 'socket.io'
 
 let io
 
-const userByRoom = {}
-const userSocketMap = new Map()
+const userByRoom = []
+const connectedUsers = new Map()
 
 const initializeSocket = (server) => {
   // creamos el servidor de socket.io
@@ -22,7 +22,7 @@ const initializeSocket = (server) => {
     socket.emit('requestUserId', () => null)
     // Recibo el userId del usuario recién conectado y lo asocio al socket que utilizó para conectarse
     socket.on('registerUser', (userId) => {
-      userSocketMap.set(userId, socket.id)
+      connectedUsers.set(userId, socket.id)
       console.log(`User ${userId} connected with socket ${socket.id}`)
     })
 
@@ -33,7 +33,7 @@ const initializeSocket = (server) => {
       socket.join(coursesIdParsed)
       userByRoom[userId] = { socketId: socket.id, rooms: coursesIdParsed }
 
-      // console.log('Currently created rooms: ', io.sockets.adapter.rooms)
+      console.log('Currently created rooms: ', io.sockets.adapter.rooms)
     })
 
     socket.on('takeAttendance', (data) => {
@@ -45,19 +45,27 @@ const initializeSocket = (server) => {
       })
     })
 
+    // socket.on('agreeEnrollment', (userId) => {
+    //   const socketId = connectedUsers.get(userId)
+
+    //   if (!socketId) return
+    //   // Si está conectado, emito un evento para que, desde el cliente, pueda actualizar su lista de cursos
+    //   io.to(socketId).emit('updateCourses', () => null)
+    // })
+
     // socket.on('toBePresent', (data) => {})
 
     socket.on('disconnecting', () => {
-      userSocketMap.forEach((value, key) => {
+      connectedUsers.forEach((value, key) => {
         if (value === socket.id) {
-          userSocketMap.delete(key)
+          connectedUsers.delete(key)
           console.log(`User ${key} disconnected`)
         }
       })
     })
 
     socket.on('disconnect', () => {
-      console.log(userSocketMap)
+      console.log(connectedUsers)
       // console.log('a user has disconnected')
       // console.log(
       //   "Connected users ID's: ",
@@ -70,6 +78,8 @@ const initializeSocket = (server) => {
 
 const getSocketIo = () => io
 
-const getUserSocketMap = () => userSocketMap
+const getConnectedUsers = () => connectedUsers
 
-export { initializeSocket, getSocketIo, getUserSocketMap }
+const isConnected = (userId) => connectedUsers.get(userId)
+
+export { initializeSocket, getSocketIo, getConnectedUsers, isConnected }

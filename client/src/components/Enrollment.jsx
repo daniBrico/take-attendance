@@ -6,7 +6,8 @@ function ListOfEnrollments({
   studentId,
   courseId,
   setEnrollments,
-  setCourses
+  setCourses,
+  socketRef
 }) {
   const handleAgreeEnrollment = () => {
     async function axiosAgreeEnrollment() {
@@ -59,7 +60,8 @@ export function Enrollments({
   listOfEnrollments,
   courseId,
   setEnrollments,
-  setCourses
+  setCourses,
+  socketRef
 }) {
   return listOfEnrollments.length > 0 ? (
     listOfEnrollments.map((enrollment) => (
@@ -70,6 +72,7 @@ export function Enrollments({
         courseId={courseId}
         setEnrollments={setEnrollments}
         setCourses={setCourses}
+        socketRef={socketRef}
       />
     ))
   ) : (

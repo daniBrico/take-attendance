@@ -37,12 +37,12 @@ export function Courses({ listOfCourses, setCourseSelected }) {
   return listOfCourses ? (
     listOfCourses.map((course) => (
       <ListOfCourses
-        key={course.id}
-        name={course.name}
-        code={course.code}
-        numberOfStudents={course.numberOfStudents}
+        key={course.courseId}
+        name={course.subjectName}
+        code={course.subjectCode}
+        numberOfStudents={course.courseStudents}
         setCourseSelected={setCourseSelected}
-        id={course.id}
+        id={course.courseId}
       />
     ))
   ) : (

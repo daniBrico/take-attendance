@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { getCourses } from '../api/courses'
 import { useAuth } from './AuthContext'
+import { registerCallback, unregisterCallback } from '../utils/socketService'
+import useUpdateCourses from '../hooks/updateCourses'
 
 export const CourseContext = createContext()
 
@@ -17,6 +19,7 @@ export const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState([])
   const [courseSelected, setCourseSelected] = useState(null)
   const [takeAttendance, setTakeAttendance] = useState(false)
+  const updateCoursesCallback = useUpdateCourses(setCourses)
   const { socketRef } = useAuth()
 
   useEffect(() => {
@@ -34,7 +37,15 @@ export const CourseProvider = ({ children }) => {
     }
 
     axiosSetCourses()
-  }, [])
+
+    if (!socketRef) return
+
+    registerCallback('updateCourses', updateCoursesCallback)
+
+    return () => {
+      unregisterCallback('updateCourses')
+    }
+  }, [updateCoursesCallback])
 
   useEffect(() => {
     if (!takeAttendance) return

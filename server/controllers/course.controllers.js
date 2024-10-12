@@ -1,8 +1,13 @@
 import Subject from '../models/mongoDB/schemas/college/Subject.js'
 import Course from '../models/mongoDB/schemas/college/Course.js'
+import Professor from '../models/mongoDB/schemas/auth/Professor.js'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
-import { getSocketIo, getUserSocketMap } from '../socket/socket.js'
+import {
+  getSocketIo,
+  getConnectedUsers,
+  isConnected,
+} from '../socket/socket.js'
 
 const generateCourseCode = (courseId) => {
   const hash = crypto
@@ -24,10 +29,10 @@ const setCourseInformation = async (courses) => {
     // Me falta pasar los días de cursada
 
     courseInformation.push({
-      id: course._id,
-      name: subject.name,
-      code: subject.code,
-      numberOfStudents: course.students.length,
+      courseId: course._id.toString(),
+      subjectName: subject.name,
+      subjectCode: subject.code,
+      courseStudents: course.students.length,
     })
   }
 
@@ -40,6 +45,14 @@ export const createCourse = async (req, res) => {
   const { id: professorId } = decoded
 
   try {
+    const subjectFounded = await Subject.findById(subjectId)
+
+    if (!subjectFounded) return
+
+    const professorFounded = await Professor.findById(professorId)
+
+    if (!professorFounded) return
+
     const newCourse = new Course({
       subject: subjectId,
       professor: professorId,
@@ -49,9 +62,18 @@ export const createCourse = async (req, res) => {
 
     newCourse.code = codeGenerated
 
-    await newCourse.save()
+    const savedCourse = await newCourse.save()
 
-    res.status(201).json({ message: 'Curso creado exitosamente' })
+    const courseInformation = {
+      courseId: savedCourse._id.toString(),
+      subjectName: subjectFounded.name,
+      subjectCode: subjectFounded.code,
+      courseStudents: savedCourse.students.length,
+    }
+
+    res
+      .status(201)
+      .json({ message: 'Curso creado exitosamente', courseInformation })
   } catch (err) {
     res
       .status(500)
@@ -121,7 +143,7 @@ export const setNewEnrollment = async (req, res) => {
     const io = getSocketIo()
 
     if (io) {
-      const userSocketMap = getUserSocketMap()
+      const userSocketMap = getConnectedUsers()
 
       if (userSocketMap) {
         const professorId = foundCourse.professor.toString()
@@ -231,6 +253,23 @@ export const agreeEnrollment = async (req, res) => {
     foundCourse.enrollments.splice(foundEnrollmentIndex, 1)
 
     await foundCourse.save()
+
+    const io = getSocketIo()
+    const socketId = isConnected(studentId)
+
+    if (socketId) {
+      // Al emitir, le paso los datos que tiene que actualizar
+      const subject = await Subject.findById(foundCourse.subject)
+      console.log(foundCourse)
+      const courseInformation = {
+        courseId: foundCourse._id.toString(),
+        subjectName: subject.name,
+        subjectCode: subject.code,
+        courseStudents: foundCourse.students.length,
+      }
+
+      io.to(socketId).emit('updateCourses', courseInformation)
+    }
 
     res.status(200).json({ message: 'Solicitud aceptada.' })
   } catch (err) {

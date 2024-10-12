@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { joinCourseByCode } from '../api/courses'
 
-function HomeStudent({ setCourses, courses }) {
+function HomeStudent() {
   const {
     register,
     handleSubmit,
@@ -61,10 +61,6 @@ function HomeProfessor() {
   )
 }
 
-export function Home({ userType, setCourses, courses }) {
-  return userType === 'student' ? (
-    <HomeStudent setCourses={setCourses} courses={courses} />
-  ) : (
-    <HomeProfessor />
-  )
+export function Home({ userType }) {
+  return userType === 'student' ? <HomeStudent /> : <HomeProfessor />
 }
