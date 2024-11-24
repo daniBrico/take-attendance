@@ -32,7 +32,7 @@ const setCourseInformation = async (courses) => {
       courseId: course._id.toString(),
       subjectName: subject.name,
       subjectCode: subject.code,
-      courseStudents: course.students.length,
+      numberOfStudents: course.students.length,
     })
   }
 
@@ -68,7 +68,7 @@ export const createCourse = async (req, res) => {
       courseId: savedCourse._id.toString(),
       subjectName: subjectFounded.name,
       subjectCode: subjectFounded.code,
-      courseStudents: savedCourse.students.length,
+      numberOfStudents: savedCourse.students.length,
     }
 
     res
@@ -258,14 +258,15 @@ export const agreeEnrollment = async (req, res) => {
     const socketId = isConnected(studentId)
 
     if (socketId) {
+      // Emito un evento al alumno para que actualice su lista de cursos
       // Al emitir, le paso los datos que tiene que actualizar
       const subject = await Subject.findById(foundCourse.subject)
-      console.log(foundCourse)
+
       const courseInformation = {
         courseId: foundCourse._id.toString(),
         subjectName: subject.name,
         subjectCode: subject.code,
-        courseStudents: foundCourse.students.length,
+        numberOfStudents: foundCourse.students.length,
       }
 
       io.to(socketId).emit('updateCourses', courseInformation)

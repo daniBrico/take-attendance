@@ -40,7 +40,7 @@ export function Courses({ listOfCourses, setCourseSelected }) {
         key={course.courseId}
         name={course.subjectName}
         code={course.subjectCode}
-        numberOfStudents={course.courseStudents}
+        numberOfStudents={course.numberOfStudents}
         setCourseSelected={setCourseSelected}
         id={course.courseId}
       />

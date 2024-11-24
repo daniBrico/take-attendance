@@ -18,9 +18,10 @@ export const useCourse = () => {
 export const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState([])
   const [courseSelected, setCourseSelected] = useState(null)
-  const [takeAttendance, setTakeAttendance] = useState(false)
-  const updateCoursesCallback = useUpdateCourses(setCourses)
+
   const { socketRef } = useAuth()
+
+  const updateCoursesCallback = useUpdateCourses(setCourses)
 
   useEffect(() => {
     async function axiosSetCourses() {
@@ -47,25 +48,11 @@ export const CourseProvider = ({ children }) => {
     }
   }, [updateCoursesCallback])
 
-  useEffect(() => {
-    if (!takeAttendance) return
-
-    // Frontend event that listens for attendance updates
-    socketRef.current.on('takeAttendance', (data) => {
-      console.log(
-        `El profesor ${data.professorName} a cargo del curso de ${data.courseName}, está tomando lista.`
-      )
-    })
-
-    // Tengo que pensar como hacer que el alumno de el presente y le llegue al profesor
-  }, [takeAttendance])
-
   return (
     <CourseContext.Provider
       value={{
         courses,
         setCourses,
-        setTakeAttendance,
         courseSelected,
         setCourseSelected
       }}

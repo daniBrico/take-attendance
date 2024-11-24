@@ -7,7 +7,7 @@ import FooterCourse from '../components/FooterCourse'
 
 function CourseHomePage() {
   const { user, logout, userType, socketRef } = useAuth()
-  const { setTakeAttendance, courseSelected } = useCourse()
+  const { courseSelected } = useCourse()
 
   const { id, name } = courseSelected
 
@@ -20,8 +20,6 @@ function CourseHomePage() {
       courseName: name,
       professorName: user.name
     })
-
-    setTakeAttendance(true)
   }
 
   return (

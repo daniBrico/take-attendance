@@ -14,6 +14,8 @@ function ListOfEnrollments({
       try {
         const res = await agreeEnrollment(courseId, studentId)
 
+        console.log('Ingresar a axiosAgreeEnrollment')
+
         if (res.status === 200) {
           setEnrollments((prevEnrollments) =>
             prevEnrollments.filter(
@@ -21,12 +23,18 @@ function ListOfEnrollments({
             )
           )
 
+          console.log(
+            'Se obtuvo un código 200 del servidor, aumento en +1 la cantidad de numero de estudiantes'
+          )
+
           setCourses((prevCourses) => {
             const updatedCourses = prevCourses.map((course) =>
-              course.id === courseId
+              courseId === course.courseId
                 ? { ...course, numberOfStudents: course.numberOfStudents + 1 }
                 : course
             )
+
+            console.log(updatedCourses)
 
             return updatedCourses
           })

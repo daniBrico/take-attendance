@@ -22,6 +22,12 @@ export const initSocket = () => {
     triggerCallback('updateCourses', updateCourseData)
   })
 
+  // Si el alumno pertenece al curso, eecibo el evento cuando el profesor toma lista
+  socket.on('takeAttendance', (data) => {
+    // Debería mostrar una notificación en pantalla al alumno para que pueda dar el presente
+    console.log(data)
+  })
+
   return socket
 }
 
