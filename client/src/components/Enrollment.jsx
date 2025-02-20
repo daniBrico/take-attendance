@@ -23,18 +23,12 @@ function ListOfEnrollments({
             )
           )
 
-          console.log(
-            'Se obtuvo un código 200 del servidor, aumento en +1 la cantidad de numero de estudiantes'
-          )
-
           setCourses((prevCourses) => {
             const updatedCourses = prevCourses.map((course) =>
               courseId === course.courseId
                 ? { ...course, numberOfStudents: course.numberOfStudents + 1 }
                 : course
             )
-
-            console.log(updatedCourses)
 
             return updatedCourses
           })

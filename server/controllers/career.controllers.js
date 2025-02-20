@@ -29,3 +29,39 @@ export const getSubjectsNames = async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 }
+
+export const getCareerByID = async (req, res) => {
+  try {
+    const id = req.params.id
+    const career = await Career.findById(id)
+      .select('-__v')
+      .populate({
+        path: 'subjectsByYear.subjects',
+        model: 'Subject',
+        select: '-_id -__v',
+        populate: {
+          path: 'correlatives',
+          select: 'code -_id',
+        },
+      })
+
+    const transformedCareer = {
+      ...career.toObject(),
+      subjectsByYear: career.subjectsByYear.map((year) => ({
+        year: year.year,
+        subjects: year.subjects.map((subject) => ({
+          ...subject.toObject(),
+          correlatives: subject.correlatives.map(
+            (correlative) => correlative.code
+          ),
+        })),
+      })),
+    }
+
+    if (!career) return res.status(404).json({ message: 'Career Not Found' })
+
+    res.json(transformedCareer)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
