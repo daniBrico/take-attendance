@@ -182,6 +182,20 @@
             "code": "07068"
           }
         ]
+      },
+      {
+        "year": "Otros requisitos",
+        "subjects": [
+          {
+            "code": "SA 001"
+          },
+          {
+            "code": "SA 002"
+          },
+          {
+            "code": "SA 003"
+          }
+        ]
       }
     ]
   }

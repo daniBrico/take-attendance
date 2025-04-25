@@ -1,20 +1,24 @@
 import Career from '../models/mongoDB/schemas/college/Career.js'
-import Subject from '../models/mongoDB/schemas/college/Subject.js'
+// import Subject from '../models/mongoDB/schemas/college/Subject.js'
 
-export const getCareersNames = async (req, res) => {
+export const getCareerNames = async (req, res) => {
   try {
     const careersNames = await Career.find({}, 'name')
 
     res.json(careersNames)
   } catch (err) {
-    res.staus(500).json({ message: err.mesage })
+    res.status(500).json({ message: err.mesage })
   }
 }
 
-export const getSubjectsNames = async (req, res) => {
+export const getSubjectNames = async (req, res) => {
   try {
     // Tengo que filtrar por carrera. Solo devolver las materias correspondientes a una carrera.
     const idCareer = req.query.idCareer
+
+    if (!idCareer) throw new Error('Invalid ID career')
+
+    console.log('🚀 ~ getSubjectNames ~ idCareer: ', idCareer)
 
     const career = await Career.findById(idCareer).populate({
       path: 'subjectsByYear.subjects',
@@ -33,6 +37,7 @@ export const getSubjectsNames = async (req, res) => {
 export const getCareerByID = async (req, res) => {
   try {
     const id = req.params.id
+    console.log('🚀 ~ getCareerByID ~ id: ', id)
     const career = await Career.findById(id)
       .select('-__v')
       .populate({

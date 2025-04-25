@@ -255,5 +255,20 @@
     "name": "Trabajo Final",
     "code": "07068",
     "offering": "Anual"
+  },
+  {
+    "name": "Inglés I",
+    "code": "SA 002",
+    "offering": ""
+  },
+  {
+    "name": "Inglés II",
+    "code": "SA 003",
+    "offering": ""
+  },
+  {
+    "name": "Trabajo Social Obligatorio",
+    "code": "SA 001",
+    "offering": ""
   }
 ]

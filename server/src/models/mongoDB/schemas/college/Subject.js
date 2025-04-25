@@ -11,7 +11,6 @@ const SubjectSchema = new Schema({
   },
   offering: {
     type: String,
-    required: true,
   },
   correlatives: [
     {
